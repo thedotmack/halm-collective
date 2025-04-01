@@ -1,6 +1,5 @@
 ---
 ---
-
 <section id="hero" class="fullpage-section">
   <!-- Background Image with Overlay -->
   <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" 
@@ -14,8 +13,8 @@
       <h1 class="text-4xl md:text-5xl font-light tracking-widest mb-4">
         HALM COLLECTIVE
       </h1>
-      <p class="text-lg md:text-xl font-light text-gray-200 mb-10">
-        Where time surrenders to intention
+      <p id="cycling-tagline" class="text-lg md:text-xl font-light text-gray-200 mb-10 transition-opacity duration-1000">
+        step in. slow down. find the moments that matter most
       </p>
       
       <!-- Scroll Indicator -->
@@ -26,4 +25,38 @@
       </div>
     </div>
   </div>
+
+  <!-- Script for Cycling Taglines -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const taglines = [
+        "your rhythm, rediscovered",
+        "calm cultivates clarity",
+        "time flows with intention, not industry",
+        "moments measured in meaning, not minutes",
+        "step in. slow down. find the moments that matter most"
+      ];
+      
+      const taglineElement = document.getElementById('cycling-tagline');
+      let currentTagline = 0;
+      
+      function cycleTaglines() {
+        // Start fade out
+        taglineElement.style.opacity = '0';
+        
+        // After fade out completes, change text and fade in
+        setTimeout(() => {
+          // Move to next tagline
+          currentTagline = (currentTagline + 1) % taglines.length;
+          taglineElement.textContent = taglines[currentTagline];
+          
+          // Start fade in
+          taglineElement.style.opacity = '1';
+        }, 1000); // Fade duration in ms
+      }
+      
+      // Start cycling
+      setInterval(cycleTaglines, 8000); // Total time per tagline
+    });
+  </script>
 </section>
