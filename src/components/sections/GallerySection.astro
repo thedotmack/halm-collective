@@ -1,8 +1,4 @@
 ---
-import Icon from '../ui/Icon.astro';
-import Button from '../core/Button.astro';
-import ImageGallery from '../ui/ImageGallery.astro';
-
 const galleryImages = [
   '/images/placeholders/gallery-1.jpg',
   '/images/placeholders/gallery-2.jpg',
@@ -13,22 +9,54 @@ const galleryImages = [
 ];
 ---
 
-<section 
-  id="gallery"
-  class="min-h-screen w-screen flex flex-col justify-center snap-start px-6 py-16"
->
-  <div class="relative z-10">
-    <h2 class="text-2xl font-light mb-8 text-center">MOMENTS BEYOND WORDS</h2>
-    
-    <ImageGallery images={galleryImages} />
-    
-    <div class="flex items-center justify-center space-x-3 my-8">
-      <Icon name="instagram" size={20} />
-      <span class="text-sm">@halmcollective</span>
+<section id="gallery" class="fullpage-section bg-black">
+  <div class="relative z-10 h-full w-full flex items-center justify-center">
+    <div class="max-w-lg px-6 py-16 w-full">
+      <h2 class="text-3xl font-light text-center mb-8">MOMENTS BEYOND WORDS</h2>
+      
+      <!-- Gallery Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-10">
+        {galleryImages.map((image) => (
+          <div 
+            class="aspect-square bg-cover bg-center rounded-sm transition-transform hover:scale-[1.02]"
+            style={`background-image: url('${image}');`}
+          ></div>
+        ))}
+      </div>
+      
+      <!-- Instagram Link -->
+      <div class="flex items-center justify-center space-x-3 mb-10">
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          width="20" 
+          height="20" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          stroke-width="2" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"
+        >
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>
+        <span class="text-sm">@halmcollective</span>
+      </div>
+      
+      <button class="w-full py-4 bg-[#D2CBBA] text-black font-medium hover:bg-white transition-colors text-sm tracking-wide">
+        CROSS THE THRESHOLD
+      </button>
     </div>
-    
-    <Button variant="primary">
-      CROSS THE THRESHOLD
-    </Button>
   </div>
 </section>
+
+<script>
+  // Gallery image click functionality - could expand to lightbox in production
+  document.querySelectorAll('#gallery .grid > div').forEach(image => {
+    image.addEventListener('click', () => {
+      // In production, would trigger lightbox here
+      console.log('Gallery image clicked');
+    });
+  });
+</script>

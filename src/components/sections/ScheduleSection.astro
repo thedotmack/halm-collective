@@ -1,7 +1,4 @@
 ---
-import Button from '../core/Button.astro';
-import ScheduleCard from '../ui/ScheduleCard.astro';
-
 const scheduleItems = [
   {
     day: "Monday",
@@ -20,30 +17,70 @@ const scheduleItems = [
     time: "10:00 AM - 11:00 AM",
     title: "Profound Control",
     description: "Advanced reformer practice where precision becomes meditation"
+  },
+  {
+    day: "Thursday",
+    time: "7:30 AM - 8:30 AM",
+    title: "Dawn Realignment",
+    description: "Gentle movement to align the body and prepare the mind for the day ahead"
+  },
+  {
+    day: "Friday",
+    time: "6:00 PM - 7:00 PM",
+    title: "Sunset Release",
+    description: "End-of-week unwinding session, transitioning from doing to being"
   }
 ];
 ---
 
-<section 
-  id="schedule"
-  class="h-screen w-screen flex flex-col justify-center snap-start px-6 bg-[#373221] overflow-y-auto"
->
-  <div class="relative z-10 py-16">
-    <h2 class="text-2xl font-light mb-8 text-center">RHYTHMS OF TRANSFORMATION</h2>
-    
-    <div class="space-y-4 mb-8">
-      {scheduleItems.map((item) => (
-        <ScheduleCard
-          day={item.day}
-          time={item.time}
-          title={item.title}
-          description={item.description}
-        />
-      ))}
+<section id="schedule" class="fullpage-section bg-[#373221]">
+  <div class="relative z-10 h-full w-full flex flex-col items-center justify-center overflow-hidden">
+    <div class="max-w-lg px-6 py-8 md:py-0 w-full">
+      <h2 class="text-3xl font-light text-center mb-10">RHYTHMS OF TRANSFORMATION</h2>
+      
+      <div class="grid grid-cols-1 gap-4 max-h-[60vh] overflow-y-auto pr-2 mb-10 class-schedule">
+        {scheduleItems.map((item) => (
+          <div class="bg-black/40 backdrop-blur-sm p-4 rounded-sm hover:bg-black/50 transition-colors">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-[#D2CBBA] font-medium">{item.day}</span>
+              <span class="text-xs text-gray-400">{item.time}</span>
+            </div>
+            <h3 class="text-lg font-medium mb-1">{item.title}</h3>
+            <p class="text-sm text-gray-300">{item.description}</p>
+          </div>
+        ))}
+      </div>
+      
+      <button class="w-full py-4 bg-transparent border border-[#D2CBBA] text-[#D2CBBA] hover:bg-[#D2CBBA] hover:text-black transition-colors text-sm font-medium tracking-wide">
+        DISCOVER YOUR JOURNEY
+      </button>
     </div>
-    
-    <Button variant="secondary">
-      DISCOVER YOUR JOURNEY
-    </Button>
   </div>
 </section>
+
+<style>
+  /* Custom scrollbar for schedule */
+  .class-schedule::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .class-schedule::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+  }
+  
+  .class-schedule::-webkit-scrollbar-thumb {
+    background: rgba(210, 203, 186, 0.5);
+    border-radius: 2px;
+  }
+  
+  .class-schedule::-webkit-scrollbar-thumb:hover {
+    background: rgba(210, 203, 186, 0.8);
+  }
+  
+  /* For Firefox */
+  .class-schedule {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(210, 203, 186, 0.5) rgba(0, 0, 0, 0.2);
+  }
+</style>

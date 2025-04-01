@@ -1,1 +1,35 @@
 @import "tailwindcss";
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+/* Modern approach for full page sections with snapping */
+.fullpage-container {
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+}
+
+.fullpage-section {
+  height: 100vh;
+  width: 100vw;
+  scroll-snap-align: start;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hide scrollbars but keep functionality */
+.fullpage-container {
+  /* For Chrome, Safari and Opera */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.fullpage-container::-webkit-scrollbar {
+  display: none;
+}

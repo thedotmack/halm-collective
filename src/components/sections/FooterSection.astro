@@ -1,47 +1,85 @@
 ---
-import Icon from '../ui/Icon.astro';
-import Logo from '../ui/Logo.astro';
 ---
 
-<footer 
-  id="footer"
-  class="min-h-screen w-screen flex flex-col justify-center snap-start px-6 py-16 bg-black relative"
->
-  <div class="absolute inset-0 opacity-10 bg-cover bg-center"
-    style="background-image: url('/images/placeholders/mashrabiya-pattern.jpg');"
-  ></div>
-  
-  <div class="relative z-10">
-    <div class="mb-8 flex justify-center">
-      <Logo width={60} height={45} />
-    </div>
-    
-    <div class="grid grid-cols-2 gap-y-4 gap-x-8 mb-12 text-sm">
-      <a href="#pillars" class="text-left hover:text-[#D2CBBA]">Classes</a>
-      <a href="#membership" class="text-left hover:text-[#D2CBBA]">Membership</a>
-      <a href="#hero" class="text-left hover:text-[#D2CBBA]">About</a>
-      <a href="#footer" class="text-left hover:text-[#D2CBBA]">Contact</a>
-      <a href="#pillars" class="text-left hover:text-[#D2CBBA]">Café</a>
-      <a href="#pillars" class="text-left hover:text-[#D2CBBA]">Community</a>
-    </div>
-    
-    <div class="text-sm space-y-3 text-gray-400 text-center mb-12">
-      <p>Villa 123, Jumeirah, Dubai, UAE</p>
-      <p>+971 50 123 4567</p>
-      <p>info@halmcollective.com</p>
-    </div>
-    
-    <div class="flex space-x-6 justify-center mb-8">
-      <a href="https://instagram.com/halmcollective" target="_blank" rel="noopener noreferrer">
-        <Icon name="instagram" size={20} class="text-white hover:text-[#D2CBBA]" />
-      </a>
-      <a href="https://facebook.com/halmcollective" target="_blank" rel="noopener noreferrer">
-        <Icon name="facebook" size={20} class="text-white hover:text-[#D2CBBA]" />
-      </a>
-    </div>
-    
-    <p class="text-xs text-center text-gray-500">
-      © 2025 HALM Collective. All rights reserved.
-    </p>
+<section id="footer" class="fullpage-section bg-black">
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10" 
+       style="background-image: url('/images/placeholders/mashrabiya-pattern.jpg');">
   </div>
-</footer>
+  
+  <!-- Content -->
+  <div class="relative z-10 h-full w-full flex items-center justify-center">
+    <div class="max-w-lg px-6 w-full">
+      <!-- Logo -->
+      <div class="flex justify-center mb-12">
+        <svg 
+          width="60" 
+          height="45" 
+          viewBox="0 0 231 171" 
+          fill="currentColor" 
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M0 0H231V45H142V67H200V104H142V127H231V171H0V127H88V104H31V67H88V45H0V0Z" />
+        </svg>
+      </div>
+      
+      <!-- Navigation Links -->
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-8 mb-12">
+        <a href="#pillars" class="text-base hover:text-[#D2CBBA] transition-colors">Classes</a>
+        <a href="#membership" class="text-base hover:text-[#D2CBBA] transition-colors">Membership</a>
+        <a href="#hero" class="text-base hover:text-[#D2CBBA] transition-colors">About</a>
+        <a href="#footer" class="text-base hover:text-[#D2CBBA] transition-colors">Contact</a>
+        <a href="#pillars" class="text-base hover:text-[#D2CBBA] transition-colors">Café</a>
+        <a href="#pillars" class="text-base hover:text-[#D2CBBA] transition-colors">Community</a>
+      </div>
+      
+      <!-- Contact Information -->
+      <div class="text-base space-y-3 text-gray-400 text-center mb-12">
+        <p>Villa 123, Jumeirah, Dubai, UAE</p>
+        <p>+971 50 123 4567</p>
+        <p>info@halmcollective.com</p>
+      </div>
+      
+      <!-- Social Icons -->
+      <div class="flex space-x-6 justify-center mb-10">
+        <a href="https://instagram.com/halmcollective" target="_blank" rel="noopener noreferrer" class="hover:text-[#D2CBBA] transition-colors">
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            width="24" 
+            height="24" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+          >
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+        </a>
+        <a href="https://facebook.com/halmcollective" target="_blank" rel="noopener noreferrer" class="hover:text-[#D2CBBA] transition-colors">
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            width="24" 
+            height="24" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="2" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+          >
+            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+          </svg>
+        </a>
+      </div>
+      
+      <!-- Copyright -->
+      <p class="text-sm text-center text-gray-500">
+        © 2025 HALM Collective. All rights reserved.
+      </p>
+    </div>
+  </div>
+</section>

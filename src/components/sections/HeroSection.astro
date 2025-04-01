@@ -1,22 +1,29 @@
 ---
-import Icon from '../ui/Icon.astro';
 ---
 
-<section 
-  id="hero"
-  class="relative h-screen w-screen flex flex-col justify-center items-center snap-start"
->
-  <div 
-    class="absolute inset-0 bg-cover bg-center"
-    style="background-image: url('/images/placeholders/hero-bg.jpg'); filter: brightness(0.6);"
-  ></div>
-  <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+<section id="hero" class="fullpage-section">
+  <!-- Background Image with Overlay -->
+  <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" 
+       style="background-image: url('/images/placeholders/hero-bg.jpg');">
+    <div class="absolute inset-0 bg-black/60"></div>
+  </div>
   
-  <div class="z-10 max-w-xs text-center space-y-6 px-6">
-    <h1 class="text-3xl font-light tracking-widest">HALM COLLECTIVE</h1>
-    <p class="text-base font-light">
-      Where time surrenders to intention
-    </p>
-    <Icon name="chevron-down" size={32} class="mx-auto mt-12 animate-bounce" />
+  <!-- Content -->
+  <div class="relative z-10 h-full w-full flex flex-col items-center justify-center">
+    <div class="max-w-md px-6 text-center">
+      <h1 class="text-4xl md:text-5xl font-light tracking-widest mb-4">
+        HALM COLLECTIVE
+      </h1>
+      <p class="text-lg md:text-xl font-light text-gray-200 mb-10">
+        Where time surrenders to intention
+      </p>
+      
+      <!-- Scroll Indicator -->
+      <div class="mt-16 animate-bounce flex justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </div>
+    </div>
   </div>
 </section>

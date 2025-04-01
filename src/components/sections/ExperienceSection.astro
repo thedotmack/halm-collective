@@ -1,61 +1,69 @@
 ---
-import Icon from '../ui/Icon.astro';
 ---
 
-<section 
-  id="experience"
-  class="h-screen w-screen flex flex-col justify-center snap-start px-6 bg-[#2B3A0C] bg-opacity-90 relative"
->
-  <div 
-    class="absolute inset-0 bg-cover bg-center opacity-30"
-    style="background-image: url('/images/placeholders/experience-bg.jpg');"
-  ></div>
+<section id="experience" class="fullpage-section bg-[#2B3A0C]">
+  <!-- Background Image with Overlay -->
+  <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30" 
+       style="background-image: url('/images/placeholders/experience-bg.jpg');">
+  </div>
   
-  <div class="relative z-10">
-    <h2 class="text-3xl font-light mb-12 text-center">"Here, time surrenders"</h2>
-    
-    <div class="relative mb-8">
-      <div 
-        class="w-full h-64 bg-cover bg-center rounded relative"
-        style="background-image: url('/images/placeholders/experience-video.jpg');"
-      >
-        <button 
-          id="play-button"
-          class="absolute bottom-4 right-4 bg-black bg-opacity-50 rounded-full p-2"
-          aria-label="Play video"
-        >
-          <Icon name="play" size={20} />
-        </button>
-      </div>
+  <!-- Content -->
+  <div class="relative z-10 h-full w-full flex items-center justify-center">
+    <div class="max-w-lg px-6">
+      <h2 class="text-3xl md:text-4xl font-light text-center mb-12">"Here, time surrenders"</h2>
       
-      <div class="bg-black bg-opacity-70 p-6 rounded-sm mt-4">
-        <p class="italic text-sm mb-3">
-          "I arrived seeking fitness, I discovered sanctuary. The outside world fades at the threshold, leaving only presence and possibility."
-        </p>
-        <p class="text-xs text-gray-400">— Sarah K., Transformed since 2024</p>
+      <div class="w-full">
+        <!-- Video Preview -->
+        <div class="relative w-full rounded-sm overflow-hidden mb-8">
+          <div class="aspect-video bg-cover bg-center" 
+               style="background-image: url('/images/placeholders/experience-video.jpg');">
+          </div>
+          
+          <button 
+            id="play-button"
+            class="absolute inset-0 flex items-center justify-center group"
+            aria-label="Play video"
+          >
+            <div class="w-16 h-16 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center group-hover:bg-black/70 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </div>
+          </button>
+        </div>
+        
+        <!-- Testimonial -->
+        <div class="bg-black/40 backdrop-blur-sm p-6 rounded-sm">
+          <p class="italic text-base mb-4">
+            "I arrived seeking fitness, I discovered sanctuary. The outside world fades at the threshold, leaving only presence and possibility."
+          </p>
+          <p class="text-sm text-gray-300">— Sarah K., Transformed since 2024</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <script>
-  // Simple video player toggle functionality
+  // Video player toggle functionality
   const playButton = document.getElementById('play-button');
-  let isPlaying = false;
   
   if (playButton) {
     playButton.addEventListener('click', () => {
-      isPlaying = !isPlaying;
+      // In a real implementation, this would trigger a video modal or player
+      console.log('Video playback requested');
       
-      // We'll update the button HTML directly since we can't easily access our Icon component in JS
-      if (isPlaying) {
-        playButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
-      } else {
-        playButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l14 9-14 9V3z"></path></svg>`;
+      // Simple toggle for demonstration
+      const icon = playButton.querySelector('svg');
+      if (icon) {
+        if (icon.innerHTML.includes('polygon')) {
+          // Change to pause icon
+          icon.innerHTML = '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>';
+        } else {
+          // Change to play icon
+          icon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
+        }
       }
-      
-      // In a real implementation, this would control an actual video element
-      console.log('Video playback toggled:', isPlaying);
     });
   }
 </script>
