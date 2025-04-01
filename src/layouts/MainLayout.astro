@@ -39,31 +39,6 @@ const { title } = Astro.props;
   </body>
 </html>
 
-<style is:global>
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-
-  :root {
-    --color-primary: #533E28;
-    --color-secondary: #2B3A0C;
-    --color-accent-1: #D2CBBA;
-    --color-accent-2: #3C6E8B;
-    --color-accent-3: #5B662E;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-    letter-spacing: 0.025em;
-    @apply antialiased;
-  }
-
-  .snap-mandatory > * {
-    scroll-snap-align: start;
-  }
+<style>
+@import "tailwindcss";
 </style>

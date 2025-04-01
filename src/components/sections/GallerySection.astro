@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon';
+import Icon from '../ui/Icon.astro';
 import Button from '../core/Button.astro';
 import ImageGallery from '../ui/ImageGallery.astro';
 
@@ -23,7 +23,7 @@ const galleryImages = [
     <ImageGallery images={galleryImages} />
     
     <div class="flex items-center justify-center space-x-3 my-8">
-      <Icon name="lucide:instagram" size={20} />
+      <Icon name="instagram" size={20} />
       <span class="text-sm">@halmcollective</span>
     </div>
     

@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon';
+import Icon from '../ui/Icon.astro';
 ---
 
 <section 
@@ -24,7 +24,7 @@ import { Icon } from 'astro-icon';
           class="absolute bottom-4 right-4 bg-black bg-opacity-50 rounded-full p-2"
           aria-label="Play video"
         >
-          <Icon name="lucide:play" size={20} />
+          <Icon name="play" size={20} />
         </button>
       </div>
       
@@ -47,11 +47,11 @@ import { Icon } from 'astro-icon';
     playButton.addEventListener('click', () => {
       isPlaying = !isPlaying;
       
-      // Toggle play/pause icon
+      // We'll update the button HTML directly since we can't easily access our Icon component in JS
       if (isPlaying) {
-        playButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
+        playButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
       } else {
-        playButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+        playButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l14 9-14 9V3z"></path></svg>`;
       }
       
       // In a real implementation, this would control an actual video element

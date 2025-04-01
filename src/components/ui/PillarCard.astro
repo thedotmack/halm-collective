@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon';
+import Icon from '../ui/Icon.astro';
 
 interface Props {
   title: string;
@@ -17,13 +17,13 @@ const { title, description, color, image } = Astro.props;
       class="prev-pillar h-8 w-8 flex items-center justify-center"
       aria-label="Previous pillar"
     >
-      <Icon name="lucide:chevron-left" size={24} />
+      <Icon name="chevron-left" size={24} />
     </button>
     <button 
       class="next-pillar h-8 w-8 flex items-center justify-center"
       aria-label="Next pillar"
     >
-      <Icon name="lucide:chevron-right" size={24} />
+      <Icon name="chevron-right" size={24} />
     </button>
   </div>
   
@@ -36,7 +36,7 @@ const { title, description, color, image } = Astro.props;
   <p class="text-sm mb-6">{description}</p>
   <a href="#" class="flex items-center text-sm hover:underline">
     Learn more
-    <Icon name="lucide:chevron-right" size={16} class="ml-1" />
+    <Icon name="chevron-right" size={16} class="ml-1" />
   </a>
 </div>
 
