@@ -1,0 +1,19 @@
+---
+interface Props {
+  day: string;
+  time: string;
+  title: string;
+  description: string;
+}
+
+const { day, time, title, description } = Astro.props;
+---
+
+<div class="bg-black bg-opacity-40 p-4 rounded-sm">
+  <div class="flex justify-between items-center mb-2">
+    <span class="text-[#D2CBBA]">{day}</span>
+    <span class="text-xs text-gray-400">{time}</span>
+  </div>
+  <h3 class="text-sm font-medium mb-1">{title}</h3>
+  <p class="text-xs text-gray-300">{description}</p>
+</div>

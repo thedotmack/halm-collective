@@ -1,0 +1,47 @@
+---
+import { Icon } from 'astro-icon';
+import Logo from '../ui/Logo.astro';
+---
+
+<footer 
+  id="footer"
+  class="min-h-screen w-screen flex flex-col justify-center snap-start px-6 py-16 bg-black relative"
+>
+  <div class="absolute inset-0 opacity-10 bg-cover bg-center"
+    style="background-image: url('/images/placeholders/mashrabiya-pattern.jpg');"
+  ></div>
+  
+  <div class="relative z-10">
+    <div class="mb-8 flex justify-center">
+      <Logo width={60} height={45} />
+    </div>
+    
+    <div class="grid grid-cols-2 gap-y-4 gap-x-8 mb-12 text-sm">
+      <a href="#pillars" class="text-left hover:text-[#D2CBBA]">Classes</a>
+      <a href="#membership" class="text-left hover:text-[#D2CBBA]">Membership</a>
+      <a href="#hero" class="text-left hover:text-[#D2CBBA]">About</a>
+      <a href="#footer" class="text-left hover:text-[#D2CBBA]">Contact</a>
+      <a href="#pillars" class="text-left hover:text-[#D2CBBA]">Café</a>
+      <a href="#pillars" class="text-left hover:text-[#D2CBBA]">Community</a>
+    </div>
+    
+    <div class="text-sm space-y-3 text-gray-400 text-center mb-12">
+      <p>Villa 123, Jumeirah, Dubai, UAE</p>
+      <p>+971 50 123 4567</p>
+      <p>info@halmcollective.com</p>
+    </div>
+    
+    <div class="flex space-x-6 justify-center mb-8">
+      <a href="https://instagram.com/halmcollective" target="_blank" rel="noopener noreferrer">
+        <Icon name="lucide:instagram" size={20} class="text-white hover:text-[#D2CBBA]" />
+      </a>
+      <a href="https://facebook.com/halmcollective" target="_blank" rel="noopener noreferrer">
+        <Icon name="lucide:facebook" size={20} class="text-white hover:text-[#D2CBBA]" />
+      </a>
+    </div>
+    
+    <p class="text-xs text-center text-gray-500">
+      © 2025 HALM Collective. All rights reserved.
+    </p>
+  </div>
+</footer>

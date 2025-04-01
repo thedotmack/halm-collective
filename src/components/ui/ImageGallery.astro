@@ -1,0 +1,17 @@
+---
+interface Props {
+  images: string[];
+  columns?: number;
+}
+
+const { images, columns = 2 } = Astro.props;
+---
+
+<div class={`grid grid-cols-${columns} gap-3`}>
+  {images.map((image) => (
+    <div 
+      class="aspect-square bg-cover bg-center rounded-sm"
+      style={`background-image: url('${image}');`}
+    ></div>
+  ))}
+</div>

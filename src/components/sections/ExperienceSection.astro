@@ -1,0 +1,61 @@
+---
+import { Icon } from 'astro-icon';
+---
+
+<section 
+  id="experience"
+  class="h-screen w-screen flex flex-col justify-center snap-start px-6 bg-[#2B3A0C] bg-opacity-90 relative"
+>
+  <div 
+    class="absolute inset-0 bg-cover bg-center opacity-30"
+    style="background-image: url('/images/placeholders/experience-bg.jpg');"
+  ></div>
+  
+  <div class="relative z-10">
+    <h2 class="text-3xl font-light mb-12 text-center">"Here, time surrenders"</h2>
+    
+    <div class="relative mb-8">
+      <div 
+        class="w-full h-64 bg-cover bg-center rounded relative"
+        style="background-image: url('/images/placeholders/experience-video.jpg');"
+      >
+        <button 
+          id="play-button"
+          class="absolute bottom-4 right-4 bg-black bg-opacity-50 rounded-full p-2"
+          aria-label="Play video"
+        >
+          <Icon name="lucide:play" size={20} />
+        </button>
+      </div>
+      
+      <div class="bg-black bg-opacity-70 p-6 rounded-sm mt-4">
+        <p class="italic text-sm mb-3">
+          "I arrived seeking fitness, I discovered sanctuary. The outside world fades at the threshold, leaving only presence and possibility."
+        </p>
+        <p class="text-xs text-gray-400">— Sarah K., Transformed since 2024</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Simple video player toggle functionality
+  const playButton = document.getElementById('play-button');
+  let isPlaying = false;
+  
+  if (playButton) {
+    playButton.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      
+      // Toggle play/pause icon
+      if (isPlaying) {
+        playButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
+      } else {
+        playButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+      }
+      
+      // In a real implementation, this would control an actual video element
+      console.log('Video playback toggled:', isPlaying);
+    });
+  }
+</script>

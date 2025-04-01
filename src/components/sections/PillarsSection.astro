@@ -1,0 +1,135 @@
+---
+import PillarCard from '../ui/PillarCard.astro';
+
+const pillars = [
+  {
+    title: "HALM COLLECTIVE",
+    description: "Where time slows down and transformation begins. A sanctuary hidden in plain sight.",
+    color: "bg-[#533E28]",
+    image: "/images/placeholders/pillar-1.jpg"
+  },
+  {
+    title: "WELLNESS",
+    description: "Movement that whispers to your body's deeper wisdom. Intimate sessions that redefine your limits.",
+    color: "bg-[#2B3A0C]",
+    image: "/images/placeholders/pillar-2.jpg"
+  },
+  {
+    title: "CAFÉ",
+    description: "Culinary alchemy that nourishes both body and conversation. Moments savored, never rushed.",
+    color: "bg-[#3C6E8B]",
+    image: "/images/placeholders/pillar-3.jpg"
+  },
+  {
+    title: "COMMUNITY",
+    description: "Where strangers become confidants and shared intentions create a tapestry of belonging.",
+    color: "bg-[#5B662E]",
+    image: "/images/placeholders/pillar-4.jpg"
+  }
+];
+---
+
+<section 
+  id="pillars"
+  class="h-screen w-screen flex flex-col justify-center snap-start px-6"
+>
+  <div class="pillars-slider relative">
+    <div class="pillars-container">
+      {pillars.map((pillar, index) => (
+        <div class={`pillar-slide ${index === 0 ? 'active' : 'hidden'}`} data-index={index}>
+          <PillarCard
+            title={pillar.title}
+            description={pillar.description}
+            color={pillar.color}
+            image={pillar.image}
+          />
+        </div>
+      ))}
+    </div>
+    
+    <div class="flex justify-center mt-8">
+      {pillars.map((_, index) => (
+        <button
+          class={`pillar-dot w-2 h-2 rounded-full mx-1 ${index === 0 ? 'bg-white' : 'bg-gray-600'}`}
+          data-index={index}
+          aria-label={`View pillar ${index + 1}`}
+        ></button>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  // Pillar slider functionality
+  const pillarSlides = document.querySelectorAll('.pillar-slide');
+  const pillarDots = document.querySelectorAll('.pillar-dot');
+  
+  // Initialize with first slide active
+  let activeIndex = 0;
+  
+  // Set up click handlers for the dots
+  pillarDots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      setActivePillar(index);
+    });
+  });
+  
+  // Handle swipe gestures
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  const container = document.querySelector('.pillars-container');
+  if (container) {
+    container.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    container.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+  }
+  
+  function handleSwipe() {
+    if (touchEndX < touchStartX) {
+      // Swipe left, go to next
+      const nextIndex = activeIndex < pillarSlides.length - 1 ? activeIndex + 1 : 0;
+      setActivePillar(nextIndex);
+    }
+    
+    if (touchEndX > touchStartX) {
+      // Swipe right, go to previous
+      const prevIndex = activeIndex > 0 ? activeIndex - 1 : pillarSlides.length - 1;
+      setActivePillar(prevIndex);
+    }
+  }
+  
+  function setActivePillar(index) {
+    // Hide all slides
+    pillarSlides.forEach((slide) => {
+      slide.classList.add('hidden');
+      slide.classList.remove('active');
+    });
+    
+    // Deactivate all dots
+    pillarDots.forEach((dot) => {
+      dot.classList.remove('bg-white');
+      dot.classList.add('bg-gray-600');
+    });
+    
+    // Show selected slide
+    if (pillarSlides[index]) {
+      pillarSlides[index].classList.remove('hidden');
+      pillarSlides[index].classList.add('active');
+    }
+    
+    // Activate selected dot
+    if (pillarDots[index]) {
+      pillarDots[index].classList.remove('bg-gray-600');
+      pillarDots[index].classList.add('bg-white');
+    }
+    
+    // Update active index
+    activeIndex = index;
+  }
+</script>

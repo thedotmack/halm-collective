@@ -1,0 +1,35 @@
+---
+import Logo from '../ui/Logo.astro';
+import MenuOverlay from './MenuOverlay.astro';
+---
+
+<div class="fixed bottom-8 left-0 right-0 flex justify-center z-40">
+  <button 
+    id="menu-toggle"
+    class="rounded-full bg-black bg-opacity-80 p-4 shadow-lg border border-[#D2CBBA] border-opacity-30 transition-all hover:scale-105 focus:outline-none"
+    aria-label="Open menu"
+  >
+    <Logo />
+  </button>
+</div>
+
+<MenuOverlay />
+
+<script>
+  // Menu toggle functionality
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuOverlay = document.getElementById('menu-overlay');
+  const closeButton = document.getElementById('close-menu');
+  
+  if (menuToggle && menuOverlay && closeButton) {
+    menuToggle.addEventListener('click', () => {
+      menuOverlay.classList.toggle('hidden');
+      document.body.classList.toggle('overflow-hidden');
+    });
+    
+    closeButton.addEventListener('click', () => {
+      menuOverlay.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    });
+  }
+</script>

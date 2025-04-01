@@ -1,0 +1,81 @@
+---
+import { Icon } from 'astro-icon';
+
+interface Props {
+  title: string;
+  description: string;
+  color: string;
+  image: string;
+}
+
+const { title, description, color, image } = Astro.props;
+---
+
+<div class={`transition-all duration-500 ease-in-out ${color} p-8 rounded-sm relative overflow-hidden`}>
+  <div class="absolute top-4 right-4 flex space-x-4">
+    <button 
+      class="prev-pillar h-8 w-8 flex items-center justify-center"
+      aria-label="Previous pillar"
+    >
+      <Icon name="lucide:chevron-left" size={24} />
+    </button>
+    <button 
+      class="next-pillar h-8 w-8 flex items-center justify-center"
+      aria-label="Next pillar"
+    >
+      <Icon name="lucide:chevron-right" size={24} />
+    </button>
+  </div>
+  
+  <div 
+    class="w-full h-48 mb-6 bg-cover bg-center rounded"
+    style={`background-image: url('${image}'); filter: brightness(0.8);`}
+  ></div>
+  
+  <h2 class="text-2xl font-light tracking-wider mb-4">{title}</h2>
+  <p class="text-sm mb-6">{description}</p>
+  <a href="#" class="flex items-center text-sm hover:underline">
+    Learn more
+    <Icon name="lucide:chevron-right" size={16} class="ml-1" />
+  </a>
+</div>
+
+<script>
+  // Navigation between pillars
+  const prevButtons = document.querySelectorAll('.prev-pillar');
+  const nextButtons = document.querySelectorAll('.next-pillar');
+  
+  prevButtons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      const activeDot = document.querySelector('.pillar-dot.bg-white');
+      if (activeDot) {
+        const currentIndex = parseInt(activeDot.getAttribute('data-index') || '0');
+        const dotsCount = document.querySelectorAll('.pillar-dot').length;
+        const prevIndex = currentIndex > 0 ? currentIndex - 1 : dotsCount - 1;
+        
+        const prevDot = document.querySelector(`.pillar-dot[data-index="${prevIndex}"]`);
+        if (prevDot) {
+          prevDot.click();
+        }
+      }
+    });
+  });
+  
+  nextButtons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      const activeDot = document.querySelector('.pillar-dot.bg-white');
+      if (activeDot) {
+        const currentIndex = parseInt(activeDot.getAttribute('data-index') || '0');
+        const dotsCount = document.querySelectorAll('.pillar-dot').length;
+        const nextIndex = currentIndex < dotsCount - 1 ? currentIndex + 1 : 0;
+        
+        const nextDot = document.querySelector(`.pillar-dot[data-index="${nextIndex}"]`);
+        if (nextDot) {
+          nextDot.click();
+        }
+      }
+    });
+  });
+</script>

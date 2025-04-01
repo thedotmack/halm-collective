@@ -1,0 +1,31 @@
+---
+import { Icon } from 'astro-icon';
+---
+
+<div id="menu-overlay" class="fixed inset-0 bg-black bg-opacity-95 z-50 flex flex-col justify-center items-center hidden">
+  <button 
+    id="close-menu"
+    class="absolute top-4 right-4 text-white p-2"
+    aria-label="Close menu"
+  >
+    <Icon name="lucide:x" size={24} />
+  </button>
+  
+  <div class="flex flex-col items-center space-y-8 mb-12">
+    <a href="#hero" class="text-xl font-light tracking-wider hover:text-[#D2CBBA] transition-colors">HALM COLLECTIVE</a>
+    <a href="#pillars" class="text-xl font-light tracking-wider hover:text-[#D2CBBA] transition-colors">WELLNESS</a>
+    <a href="#experience" class="text-xl font-light tracking-wider hover:text-[#D2CBBA] transition-colors">CAFÉ</a>
+    <a href="#schedule" class="text-xl font-light tracking-wider hover:text-[#D2CBBA] transition-colors">COMMUNITY</a>
+    <a href="#membership" class="text-xl font-light tracking-wider hover:text-[#D2CBBA] transition-colors">MEMBERSHIP</a>
+    <a href="#footer" class="text-xl font-light tracking-wider hover:text-[#D2CBBA] transition-colors">CONTACT</a>
+  </div>
+  
+  <div class="flex space-x-6 mt-12">
+    <a href="https://instagram.com/halmcollective" target="_blank" rel="noopener noreferrer">
+      <Icon name="lucide:instagram" size={24} class="text-white hover:text-[#D2CBBA] cursor-pointer" />
+    </a>
+    <a href="https://facebook.com/halmcollective" target="_blank" rel="noopener noreferrer">
+      <Icon name="lucide:facebook" size={24} class="text-white hover:text-[#D2CBBA] cursor-pointer" />
+    </a>
+  </div>
+</div>

@@ -1,11 +1,28 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import MainLayout from '../layouts/MainLayout.astro';
+import Header from '../components/core/Header.astro';
+import FloatingMenu from '../components/core/FloatingMenu.astro';
+import HeroSection from '../components/sections/HeroSection.astro';
+import PillarsSection from '../components/sections/PillarsSection.astro';
+import ExperienceSection from '../components/sections/ExperienceSection.astro';
+import ScheduleSection from '../components/sections/ScheduleSection.astro';
+import MembershipSection from '../components/sections/MembershipSection.astro';
+import GallerySection from '../components/sections/GallerySection.astro';
+import FooterSection from '../components/sections/FooterSection.astro';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<MainLayout title="HALM Collective | Where time surrenders to intention">
+  <Header />
+  
+  <main class="snap-y snap-mandatory h-screen overflow-y-scroll">
+    <HeroSection />
+    <PillarsSection />
+    <ExperienceSection />
+    <ScheduleSection />
+    <MembershipSection />
+    <GallerySection />
+    <FooterSection />
+  </main>
+  
+  <FloatingMenu />
+</MainLayout>

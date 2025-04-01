@@ -1,0 +1,34 @@
+---
+import Button from '../core/Button.astro';
+---
+
+<section 
+  id="membership"
+  class="h-screen w-screen flex flex-col justify-center snap-start px-6 bg-[#533E28] relative"
+>
+  <div 
+    class="absolute inset-0 bg-cover bg-center opacity-20"
+    style="background-image: url('/images/placeholders/membership-bg.jpg');"
+  ></div>
+  
+  <div class="relative z-10">
+    <h2 class="text-2xl font-light mb-6 text-center">WHERE YOU ALREADY BELONG</h2>
+    
+    <div 
+      class="w-full h-56 bg-cover bg-center rounded-sm mb-6"
+      style="background-image: url('/images/placeholders/membership.jpg');"
+    ></div>
+    
+    <p class="text-sm mb-8 text-center">
+      Some arrive as strangers yet recognize themselves immediately. A curated confluence of souls where your presence completes something essential. The invitation is quiet but unmistakable.
+    </p>
+    
+    <Button variant="primary" class="mb-4">
+      BEGIN YOUR STORY
+    </Button>
+    
+    <Button variant="secondary">
+      GLIMPSE THE INNER CIRCLE
+    </Button>
+  </div>
+</section>

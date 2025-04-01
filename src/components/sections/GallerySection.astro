@@ -1,0 +1,34 @@
+---
+import { Icon } from 'astro-icon';
+import Button from '../core/Button.astro';
+import ImageGallery from '../ui/ImageGallery.astro';
+
+const galleryImages = [
+  '/images/placeholders/gallery-1.jpg',
+  '/images/placeholders/gallery-2.jpg',
+  '/images/placeholders/gallery-3.jpg',
+  '/images/placeholders/gallery-4.jpg',
+  '/images/placeholders/gallery-5.jpg',
+  '/images/placeholders/gallery-6.jpg',
+];
+---
+
+<section 
+  id="gallery"
+  class="min-h-screen w-screen flex flex-col justify-center snap-start px-6 py-16"
+>
+  <div class="relative z-10">
+    <h2 class="text-2xl font-light mb-8 text-center">MOMENTS BEYOND WORDS</h2>
+    
+    <ImageGallery images={galleryImages} />
+    
+    <div class="flex items-center justify-center space-x-3 my-8">
+      <Icon name="lucide:instagram" size={20} />
+      <span class="text-sm">@halmcollective</span>
+    </div>
+    
+    <Button variant="primary">
+      CROSS THE THRESHOLD
+    </Button>
+  </div>
+</section>
