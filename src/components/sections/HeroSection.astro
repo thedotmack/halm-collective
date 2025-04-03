@@ -1,19 +1,24 @@
 ---
 ---
 <section id="hero" class="fullpage-section">
-  <!-- Background Image with Overlay -->
-  <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" 
-       style="background-image: url('/images/placeholders/hero-bg.jpg');">
-    <div class="absolute inset-0 bg-black/60"></div>
+  <!-- Background Video with Overlay -->
+  <div class="absolute inset-0 overflow-hidden">
+    <video 
+      class="absolute w-full h-full object-cover"
+      autoplay
+      loop
+      muted
+      playsinline
+    >
+      <source src="/halm--cafe__hero--mobile.mp4" type="video/mp4">
+    </video>
+    <div class="absolute inset-0"></div>
   </div>
   
   <!-- Content -->
   <div class="relative z-10 h-full w-full flex flex-col items-center justify-center">
     <div class="max-w-md px-6 text-center">
-      <h1 class="text-4xl md:text-5xl font-light tracking-widest mb-4">
-        HALM COLLECTIVE
-      </h1>
-      <p id="cycling-tagline" class="text-lg md:text-xl font-light text-gray-200 mb-10 transition-opacity duration-1000">
+      <p id="cycling-tagline" class="text-3xl md:text-xl font-light text-gray-200 mb-10 transition-opacity duration-1000">
         step in. slow down. find the moments that matter most
       </p>
       
