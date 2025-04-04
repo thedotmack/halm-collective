@@ -2,17 +2,28 @@
 import MenuOverlay from './MenuOverlay.astro';
 ---
 
-<div class="fixed bottom-8 left-0 right-0 flex justify-center z-40">
+<!-- Darkened overlay -->
+<div 
+  id="drawer-overlay" 
+  class="fixed inset-0 bg-black/0 pointer-events-none transition-all duration-300 ease-in-out z-25"
+></div>
+
+<div class="fixed bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[#000] to-transparent opacity-90 z-0"></div>
+
+<div class="fixed bottom-8 left-0 right-0 flex justify-center z-40 transition-all duration-300" id="menu-button-container">
+
   <button 
     id="menu-toggle"
-    class="rounded-full bg-black bg-opacity-80 p-4 shadow-lg border border-[#D2CBBA] border-opacity-30 transition-all hover:scale-105 focus:outline-none"
+    class="rounded-full bg-[#e0d6d477] p-5 transition-all duration-500 hover:scale-105 focus:outline-none backdrop-blur-xs"
     aria-label="Open menu"
   >
+    <!-- Menu Icon (H) -->
     <svg 
+      class="w-9 transition-all duration-300"
       width="48" 
       height="36" 
       viewBox="0 0 231 171" 
-      fill="currentColor" 
+      fill="#fff" 
       xmlns="http://www.w3.org/2000/svg"
     >
       <path d="M0 0H231V45H142V67H200V104H142V127H231V171H0V127H88V104H31V67H88V45H0V0Z" />
@@ -20,23 +31,361 @@ import MenuOverlay from './MenuOverlay.astro';
   </button>
 </div>
 
+<!-- Drawer Menu -->
+<div 
+  id="drawer-menu" 
+  class="fixed bottom-0 left-0 right-0 w-full h-0 overflow-hidden transition-all duration-300 ease-in-out bg-[#e9d5bc] shadow-[0_-2px_10px_rgba(0,0,0,0.1)] z-30"
+>
+  <div class="relative w-full h-full">
+    <!-- Close button in corner -->
+    <button 
+      id="close-drawer"
+      class="absolute top-2 right-4 z-30 opacity-0 transition-opacity duration-300 p-2"
+      aria-label="Close menu"
+    >
+      <svg 
+        class="w-5 h-5" 
+        viewBox="0 0 24 24" 
+        fill="#5D4037" 
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+      </svg>
+    </button>
+
+    <!-- Pattern background using halm-bg-pattern.svg -->
+    <div class="absolute h-8 w-full -top-4 left-0 bg-gradient-to-b from-[#2e271f8a] to-transparent z-30"></div>
+
+    <img 
+      src="/halm-bg-pattern.svg" 
+      alt="" 
+      class="absolute inset-0 w-full object-cover z-0" 
+      aria-hidden="true"
+    />
+    
+    <!-- Carousel content -->
+    <div class="relative h-full z-20 py-3 px-2">
+      <!-- Carousel navigation arrows -->
+      <button 
+        class="absolute left-1 top-1/2 -translate-y-1/2 z-30 bg-white bg-opacity-70 rounded-full p-1 shadow-sm carousel-prev opacity-50 hover:opacity-100 transition-opacity"
+        aria-label="Previous slide"
+      >
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="#412917">
+          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+        </svg>
+      </button>
+      <button 
+        class="absolute right-1 top-1/2 -translate-y-1/2 z-30 bg-white bg-opacity-70 rounded-full p-1 shadow-sm carousel-next opacity-50 hover:opacity-100 transition-opacity"
+        aria-label="Next slide"
+      >
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="#412917">
+          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+        </svg>
+      </button>
+
+      <!-- Carousel navigation dots -->
+      <div class="absolute bottom-1 left-0 right-0 flex justify-center gap-1.5 z-30">
+        <button class="w-2 h-2 rounded-full bg-[#412917] opacity-100 carousel-dot active" aria-label="Go to slide 1"></button>
+        <button class="w-2 h-2 rounded-full bg-[#412917] opacity-40 carousel-dot" aria-label="Go to slide 2"></button>
+        <button class="w-2 h-2 rounded-full bg-[#412917] opacity-40 carousel-dot" aria-label="Go to slide 3"></button>
+        <button class="w-2 h-2 rounded-full bg-[#412917] opacity-40 carousel-dot" aria-label="Go to slide 4"></button>
+        <button class="w-2 h-2 rounded-full bg-[#412917] opacity-40 carousel-dot" aria-label="Go to slide 5"></button>
+      </div>
+      
+      <!-- Carousel container -->
+      <div class="carousel-container h-full overflow-hidden">
+        <div class="carousel-track flex transition-transform duration-300 h-full">
+          <!-- Wellness Card -->
+          <div class="carousel-card min-w-full px-4 py-2">
+            <div class="bg-white rounded-lg border border-[#e0d6d4] h-full flex overflow-hidden shadow-sm">
+              <div class="w-1/3 flex-shrink-0">
+                <img src="/images/wellness.jpg" alt="Wellness" class="w-full h-full object-cover" onerror="this.src='/halm-bg-pattern.svg'" style="transition: none;">
+              </div>
+              <div class="p-4 flex flex-col justify-center">
+                <h3 class="deco-font text-xl text-[#412917] mb-1">Wellness</h3>
+                <p class="text-[#5D4037] text-sm leading-tight">Discover holistic approaches to mind and body wellness through our curated experiences.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Cafe Card -->
+          <div class="carousel-card min-w-full px-4 py-2">
+            <div class="bg-white rounded-lg border border-[#e0d6d4] h-full flex overflow-hidden shadow-sm">
+              <div class="w-1/3 flex-shrink-0">
+                <img src="/images/cafe.jpg" alt="Cafe" class="w-full h-full object-cover" onerror="this.src='/halm-bg-pattern.svg'" style="transition: none;">
+              </div>
+              <div class="p-4 flex flex-col justify-center">
+                <h3 class="deco-font text-xl text-[#412917] mb-1">Cafe</h3>
+                <p class="text-[#5D4037] text-sm leading-tight">Savor artisanal beverages and nutritious fare in our serene and community-focused cafe.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Community Card -->
+          <div class="carousel-card min-w-full px-4 py-2">
+            <div class="bg-white rounded-lg border border-[#e0d6d4] h-full flex overflow-hidden shadow-sm">
+              <div class="w-1/3 flex-shrink-0">
+                <img src="/images/community.jpg" alt="Community" class="w-full h-full object-cover" onerror="this.src='/halm-bg-pattern.svg'" style="transition: none;">
+              </div>
+              <div class="p-4 flex flex-col justify-center">
+                <h3 class="deco-font text-xl text-[#412917] mb-1">Community</h3>
+                <p class="text-[#5D4037] text-sm leading-tight">Connect with like-minded individuals in our inclusive and supportive community spaces.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Schedule Card -->
+          <div class="carousel-card min-w-full px-4 py-2">
+            <div class="bg-white rounded-lg border border-[#e0d6d4] h-full flex overflow-hidden shadow-sm">
+              <div class="w-1/3 flex-shrink-0">
+                <img src="/images/schedule.jpg" alt="Schedule" class="w-full h-full object-cover" onerror="this.src='/halm-bg-pattern.svg'" style="transition: none;">
+              </div>
+              <div class="p-4 flex flex-col justify-center">
+                <h3 class="deco-font text-xl text-[#412917] mb-1">Schedule</h3>
+                <p class="text-[#5D4037] text-sm leading-tight">Explore our calendar of events, classes, and workshops designed to enrich your experience.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Spaces Card -->
+          <div class="carousel-card min-w-full px-4 py-2">
+            <div class="bg-white rounded-lg border border-[#e0d6d4] h-full flex overflow-hidden shadow-sm">
+              <div class="w-1/3 flex-shrink-0">
+                <img src="/images/spaces.jpg" alt="Spaces" class="w-full h-full object-cover" onerror="this.src='/halm-bg-pattern.svg'" style="transition: none;">
+              </div>
+              <div class="p-4 flex flex-col justify-center">
+                <h3 class="deco-font text-xl text-[#412917] mb-1">Spaces</h3>
+                <p class="text-[#5D4037] text-sm leading-tight">Immerse yourself in our thoughtfully designed environments for collaboration and reflection.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <MenuOverlay />
 
 <script>
   // Menu toggle functionality
   const menuToggle = document.getElementById('menu-toggle');
-  const menuOverlay = document.getElementById('menu-overlay');
-  const closeButton = document.getElementById('close-menu');
+  const drawerMenu = document.getElementById('drawer-menu');
+  const closeDrawer = document.getElementById('close-drawer');
+  const drawerOverlay = document.getElementById('drawer-overlay');
+  const heroSection = document.querySelector('main section:first-child') || document.querySelector('main');
   
-  if (menuToggle && menuOverlay && closeButton) {
+  if (menuToggle && drawerMenu && closeDrawer && drawerOverlay) {
+    // Open drawer when menu button is clicked
     menuToggle.addEventListener('click', () => {
-      menuOverlay.classList.toggle('hidden');
-      document.body.classList.toggle('overflow-hidden');
+      // Open drawer
+      drawerMenu.classList.remove('h-0');
+      drawerMenu.classList.add('h-[30vh]');
+        
+      // Fade out and zoom the button
+      menuToggle.classList.add('opacity-0', 'scale-75', 'pointer-events-none');
+      
+      // Show the darkened overlay with blur effect using CSS classes
+      drawerOverlay.classList.remove('pointer-events-none', 'bg-black/0');
+      drawerOverlay.classList.add('backdrop-blur-sm', 'bg-black/50');
+      
+      // Animate hero section up
+      if (heroSection) {
+        heroSection.style.transition = 'transform 0.3s ease-in-out';
+        heroSection.style.transform = 'translateY(-30vh)';
+      }
+      
+      // Show the close button
+      setTimeout(() => {
+        closeDrawer.classList.add('opacity-100');
+      }, 150);
     });
     
-    closeButton.addEventListener('click', () => {
-      menuOverlay.classList.add('hidden');
-      document.body.classList.remove('overflow-hidden');
-    });
+    // Close drawer when X is clicked
+    closeDrawer.addEventListener('click', closeDrawerFunction);
+    
+    // Close drawer when overlay is clicked
+    drawerOverlay.addEventListener('click', closeDrawerFunction);
+    
+    function closeDrawerFunction() {
+      // Hide drawer
+      drawerMenu.classList.add('h-0');
+      drawerMenu.classList.remove('h-[30vh]');
+      
+      // Hide the darkened overlay and remove blur effect using CSS classes
+      drawerOverlay.classList.remove('backdrop-blur-sm', 'bg-black/50');
+      drawerOverlay.classList.add('bg-black/0');
+      
+      setTimeout(() => {
+        drawerOverlay.classList.add('pointer-events-none');
+      }, 300); // Wait for fade out to complete
+      
+      // Animate hero section back down
+      if (heroSection) {
+        heroSection.style.transform = 'translateY(0)';
+      }
+      
+      // Hide the close button
+      closeDrawer.classList.remove('opacity-100');
+      
+      // Show the menu button again
+      setTimeout(() => {
+        menuToggle.classList.remove('opacity-0', 'scale-75', 'pointer-events-none');
+      }, 150);
+    }
   }
+  
+  // Carousel functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const track = document.querySelector('.carousel-track');
+    const cards = document.querySelectorAll('.carousel-card');
+    const dots = document.querySelectorAll('.carousel-dot');
+    const prevButton = document.querySelector('.carousel-prev');
+    const nextButton = document.querySelector('.carousel-next');
+    let currentIndex = 0;
+    let startX, moveX;
+    
+    // Function to update carousel position
+    const updateCarousel = (index) => {
+      currentIndex = index;
+      const offset = -currentIndex * 100;
+      track.style.transform = `translateX(${offset}%)`;
+      
+      // Update dots
+      dots.forEach((dot, i) => {
+        if (i === currentIndex) {
+          dot.classList.add('active');
+          dot.style.opacity = '1';
+        } else {
+          dot.classList.remove('active');
+          dot.style.opacity = '0.4';
+        }
+      });
+      
+      // Update arrow visibility
+      if (prevButton && nextButton) {
+        prevButton.style.visibility = currentIndex === 0 ? 'hidden' : 'visible';
+        nextButton.style.visibility = currentIndex === cards.length - 1 ? 'hidden' : 'visible';
+      }
+    };
+    
+    // Click on dots to navigate
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        updateCarousel(i);
+      });
+    });
+    
+    // Arrow button navigation
+    if (prevButton) {
+      prevButton.addEventListener('click', () => {
+        if (currentIndex > 0) {
+          updateCarousel(currentIndex - 1);
+        }
+      });
+    }
+    
+    if (nextButton) {
+      nextButton.addEventListener('click', () => {
+        if (currentIndex < cards.length - 1) {
+          updateCarousel(currentIndex + 1);
+        }
+      });
+    }
+    
+    // Touch events for swiping
+    track.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+    });
+    
+    track.addEventListener('touchmove', (e) => {
+      if (!startX) return;
+      moveX = e.touches[0].clientX;
+      const diff = moveX - startX;
+      if (Math.abs(diff) > 5) {
+        e.preventDefault(); // Prevent page scrolling when swiping
+      }
+    });
+    
+    track.addEventListener('touchend', (e) => {
+      if (!startX || !moveX) return;
+      const diff = moveX - startX;
+      const threshold = 50; // Min distance to trigger slide change
+      
+      if (diff > threshold && currentIndex > 0) {
+        // Swipe right
+        updateCarousel(currentIndex - 1);
+      } else if (diff < -threshold && currentIndex < cards.length - 1) {
+        // Swipe left
+        updateCarousel(currentIndex + 1);
+      }
+      
+      startX = null;
+      moveX = null;
+    });
+    
+    // Mouse events for desktop swiping
+    track.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      startX = e.clientX;
+      track.style.cursor = 'grabbing';
+    });
+    
+    track.addEventListener('mousemove', (e) => {
+      if (!startX) return;
+      moveX = e.clientX;
+    });
+    
+    track.addEventListener('mouseup', (e) => {
+      if (!startX || !moveX) return;
+      const diff = moveX - startX;
+      const threshold = 50;
+      
+      if (diff > threshold && currentIndex > 0) {
+        updateCarousel(currentIndex - 1);
+      } else if (diff < -threshold && currentIndex < cards.length - 1) {
+        updateCarousel(currentIndex + 1);
+      }
+      
+      startX = null;
+      moveX = null;
+      track.style.cursor = 'grab';
+    });
+    
+    track.addEventListener('mouseleave', () => {
+      startX = null;
+      moveX = null;
+      track.style.cursor = '';
+    });
+    
+    // Initialize
+    track.style.cursor = 'grab';
+    updateCarousel(0);
+  });
 </script>
+
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .carousel-card {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+  
+  .deco-font {
+    font-family: 'Bebas Neue', 'Playfair Display', 'Oswald', sans-serif;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+  
+  .carousel-dot.active {
+    transform: scale(1.2);
+  }
+</style>
+
+<!-- Font import -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">

@@ -1,0 +1,28 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import Header from '../components/core/Header.astro';
+import FloatingMenu from '../components/core/FloatingMenu.astro';
+import HeroSection from '../components/sections/HeroSection.astro';
+import PillarsSection from '../components/sections/PillarsSection.astro';
+import ExperienceSection from '../components/sections/ExperienceSection.astro';
+import ScheduleSection from '../components/sections/ScheduleSection.astro';
+import MembershipSection from '../components/sections/MembershipSection.astro';
+import GallerySection from '../components/sections/GallerySection.astro';
+import FooterSection from '../components/sections/FooterSection.astro';
+---
+
+<MainLayout title="HALM Collective">
+  <Header />
+  
+  <main class="fullpage-container">
+    <HeroSection />
+    <PillarsSection />
+    <ExperienceSection />
+    <ScheduleSection />
+    <MembershipSection />
+    <GallerySection />
+    <FooterSection />
+  </main>
+  
+  <FloatingMenu />
+</MainLayout>

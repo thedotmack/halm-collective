@@ -1,28 +1,132 @@
 ---
-import MainLayout from "../layouts/MainLayout.astro";
-import Header from "../components/core/Header.astro";
-import FloatingMenu from "../components/core/FloatingMenu.astro";
-import HeroSection from "../components/sections/HeroSection.astro";
-import PillarsSection from "../components/sections/PillarsSection.astro";
-import ExperienceSection from "../components/sections/ExperienceSection.astro";
-import ScheduleSection from "../components/sections/ScheduleSection.astro";
-import MembershipSection from "../components/sections/MembershipSection.astro";
-import GallerySection from "../components/sections/GallerySection.astro";
-import FooterSection from "../components/sections/FooterSection.astro";
+import MainLayout from '../layouts/MainLayout.astro';
 ---
 
-<MainLayout title="HALM Collective">
-  <Header />
-
-  <main class="fullpage-container">
-    <HeroSection />
-    <PillarsSection />
-    <ExperienceSection />
-    <ScheduleSection />
-    <MembershipSection />
-    <GallerySection />
-    <FooterSection />
-  </main>
-
-  <FloatingMenu />
+<MainLayout title="HALM Collective - Mobile Preview">
+  <div class="mobile-preview-container">
+    <h1 class="preview-title">HALM Mobile First Design Preview</h1>
+    <div class="device-container">
+      <div class="device-notch"></div>
+      <div class="mobile-frame">
+        <iframe src="/site-content" title="HALM Collective Mobile Preview"></iframe>
+      </div>
+      <div class="device-home-button"></div>
+    </div>
+  </div>
 </MainLayout>
+
+<style>
+  /* Dark theme for container */
+  :global(body) {
+    background-color: #121212;
+    color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mobile-preview-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    min-height: 100vh;
+  }
+
+  .preview-title {
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 0.05em;
+  }
+
+  .device-container {
+    position: relative;
+    padding: 20px 10px;
+    border-radius: 2.5rem;
+    background-color: #333;
+    box-shadow: 
+      0 10px 30px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  }
+
+  .device-notch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 20px;
+    background-color: #333;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    z-index: 10;
+  }
+
+  .device-home-button {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+  }
+
+  .mobile-frame {
+    width: 375px;
+    border-radius: 1.5rem;
+    background-color: white;
+    position: relative;
+    height: 812px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) inset;
+  }
+
+  .mobile-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  /* Add subtle animation */
+  /* .device-container {
+    transition: transform 0.3s ease;
+  } */
+  
+  /* .device-container:hover {
+    transform: scale(1.02);
+  } */
+
+  /* Hide the preview on actual mobile devices */
+  @media (max-width: 768px) {
+    .mobile-preview-container {
+      padding: 0;
+      background: none;
+    }
+    
+    .preview-title, .device-notch, .device-home-button {
+      display: none;
+    }
+    
+    .device-container {
+      padding: 0;
+      border-radius: 0;
+      background-color: transparent;
+      box-shadow: none;
+    }
+    
+    .mobile-frame {
+      width: 100%;
+      height: 100vh;
+      border-radius: 0;
+      box-shadow: none;
+    }
+  }
+</style>
