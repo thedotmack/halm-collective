@@ -15,8 +15,9 @@
     class="rounded-full bg-[#e0d6d477] p-5 transition-all duration-300 ease-in-out hover:scale-105 focus:outline-none backdrop-blur-xs z-50"
     aria-label="Open menu"
   >
-    <!-- Menu Icon (H) -->
+    <!-- Default Menu Icon (H) -->
     <svg 
+      id="default-icon"
       class="w-9 transition-all duration-300 ease-in-out"
       width="48" 
       height="36" 
@@ -26,6 +27,14 @@
     >
       <path d="M0 0H231V45H142V67H200V104H142V127H231V171H0V127H88V104H31V67H88V45H0V0Z" />
     </svg>
+    
+    <!-- Pointer Icon (for open state) - Initially hidden -->
+    <img 
+      id="pointer-icon"
+      src="/h-point-outline-2.svg" 
+      alt="Menu pointer"
+      class="w-[87.5%] transition-all duration-300 ease-in-out absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[50%] opacity-0 rotate-180"
+    />
   </button>
   
   <!-- Radial Menu Items -->
@@ -43,7 +52,8 @@
     const menuToggle = document.getElementById('radial-menu-toggle');
     const radialOverlay = document.getElementById('radial-overlay');
     const menuItems = document.querySelectorAll('.radial-menu-item');
-    const menuIcon = menuToggle?.querySelector('svg');
+    const defaultIcon = document.getElementById('default-icon');
+    const pointerIcon = document.getElementById('pointer-icon');
     
     let isMenuOpen = false;
     
@@ -59,6 +69,11 @@
         radialOverlay.classList.remove('pointer-events-none', 'bg-black/0');
         radialOverlay.classList.add('backdrop-blur-sm', 'bg-black/50');
         
+        // Switch to pointer icon
+        defaultIcon.classList.add('opacity-0');
+        pointerIcon.classList.remove('opacity-0');
+        pointerIcon.classList.add('opacity-80');
+        
         // Animate menu items out with initial delay
         menuItems.forEach(item => {
           item.classList.add('expanded');
@@ -72,10 +87,15 @@
         radialOverlay.classList.remove('backdrop-blur-sm', 'bg-black/50');
         radialOverlay.classList.add('bg-black/0');
         
-        // Reset SVG icon rotation when menu closes
-        if (menuIcon) {
-          menuIcon.style.transition = 'transform 0.3s ease-in-out';
-          menuIcon.style.transform = ''; // Reset to original state
+        // Switch back to default icon
+        defaultIcon.classList.remove('opacity-0');
+        pointerIcon.classList.remove('opacity-80');
+        pointerIcon.classList.add('opacity-0');
+        
+        // Reset pointer icon rotation
+        if (pointerIcon) {
+          pointerIcon.style.transition = 'transform 0.3s ease-in-out';
+          pointerIcon.style.transform = ''; // Reset to original state
         }
         
         setTimeout(() => {
@@ -106,7 +126,7 @@
     let activeMenuItem = null;
     
     // Add hover event listeners to each menu item
-    if (menuIcon) {
+    if (pointerIcon) {
       menuItems.forEach((item, index) => {
         // Handle hover on menu items to rotate the icon
         item.addEventListener('mouseenter', () => {
@@ -134,12 +154,12 @@
           let rotationAngle = angle - 270;
           
           // Apply specific offsets for items that need adjustment
-          if (itemNumber === 1) rotationAngle -= 45; // Adjust item 1 pointing
-          if (itemNumber === 5) rotationAngle += 45; // Adjust item 5 pointing
+          if (itemNumber === 1) rotationAngle -= 39; // Adjust item 1 pointing
+          if (itemNumber === 5) rotationAngle += 39; // Adjust item 5 pointing
           
           // Match the 0.3s duration to be the same as the menu item scale duration
-          menuIcon.style.transition = 'transform 0.3s ease-in-out';
-          menuIcon.style.transform = `rotate(${rotationAngle}deg)`;
+          pointerIcon.style.transition = 'transform 0.3s ease-in-out';
+          pointerIcon.style.transform = `rotate(${rotationAngle}deg)`;
         });
       });
     }
@@ -185,6 +205,16 @@
         activeMenuItem = null;
       }
     };
+
+    // Add a function to dynamically adjust rotation axis
+    function adjustRotationAxis(x, y) {
+      document.documentElement.style.setProperty('--button-origin-x', x);
+      document.documentElement.style.setProperty('--button-origin-y', y);
+    }
+    
+    // You can call this function to change the rotation axis
+    // For example: adjustRotationAxis('75%', '25%') would move the axis to top-right
+    // Or call it based on user interactions or viewport changes
   });
 </script>
 
@@ -214,22 +244,33 @@
     
     /* Hover scale effect - increased by 0.05 */
     --hover-scale: 1.15;
+    
+    /* Button rotation axis - default is center */
+    --button-origin-x: 50%;
+    --button-origin-y: 50%;
   }
   
   /* Button active state */
   #radial-menu-toggle.active {
     background-color: transparent;
-    transform: scale(1.1) translateY(-5%) rotate(90deg);
+    /* transform: scale(0.9) translateY(5%); */
     z-index: 1;
-    opacity: 0.9;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    /* opacity: 0.9; */
+    /* box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); */
     transition: all 0.3s ease-in-out;
+    transform-origin: var(--button-origin-x) var(--button-origin-y);
   }
 
-  #radial-menu-toggle.active:hover svg {
-    transform: scale(0.95) !important;
+  /* Apply transform-origin to the button for rotation */
+  #radial-menu-toggle {
+    transform-origin: var(--button-origin-x) var(--button-origin-y);
   }
-
+  
+  /* Apply transform-origin to icons for proper rotation */
+  #default-icon, #pointer-icon {
+    transition: opacity 0.3s ease-in-out;
+    transform-origin: var(--button-origin-x) var(--button-origin-y);
+  }
   
   /* Radial menu container */
   .radial-menu {
