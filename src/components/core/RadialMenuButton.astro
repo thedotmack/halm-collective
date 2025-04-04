@@ -76,9 +76,9 @@
         
         // Animate menu items out with initial delay
         menuItems.forEach(item => {
-          item.classList.add('expanded');
           // Reset transition delay to original values
           item.style.transitionDelay = '';
+          item.classList.add('expanded');
         });
       } else {
         // Close menu
@@ -99,21 +99,32 @@
           pointerIcon.style.transform = ''; // Reset to original state
         }
         
-        setTimeout(() => {
-          radialOverlay.classList.add('pointer-events-none');
-        }, 300);
-        
-        // Animate menu items in without delay
+        // First, trigger the reverse animation by changing the transform scale
+        // but keep the expanded class for proper animation
         menuItems.forEach(item => {
           // Remove the delay when closing the menu
           item.style.transitionDelay = '0s';
-          item.classList.remove('expanded');
-          
-          // Ensure expanded class is completely removed after animation
-          setTimeout(() => {
-            item.classList.remove('expanded');
-          }, 350); // Slightly longer than the transition duration
+          // Apply the scale(0) transform while keeping expanded class
+          item.style.transform = 'translateX(-50%) scale(0)';
+          item.style.opacity = '0';
         });
+        
+        // Then remove expanded class and reset inline styles after animation completes
+        setTimeout(() => {
+          menuItems.forEach(item => {
+            item.classList.remove('expanded');
+            // Clear inline styles to let CSS take over again
+            setTimeout(() => {
+              item.style.transform = '';
+              item.style.opacity = '';
+            }, 50);
+          });
+        }, 300); // Match transition duration
+        
+        // Add pointer-events-none after animation finishes
+        setTimeout(() => {
+          radialOverlay.classList.add('pointer-events-none');
+        }, 300);
       }
     }
     
@@ -204,15 +215,6 @@
       if (wasOpen && !isMenuOpen && activeMenuItem) {
         activeMenuItem.classList.remove('item-active');
         activeMenuItem = null;
-      }
-      
-      // Extra cleanup for expanded state when closing
-      if (!isMenuOpen) {
-        setTimeout(() => {
-          menuItems.forEach(item => {
-            item.classList.remove('expanded');
-          });
-        }, 350);
       }
     };
 
