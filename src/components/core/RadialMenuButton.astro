@@ -245,6 +245,16 @@
     --button-origin-y: 50%;
   }
   
+  /* Font loading */
+  @font-face {
+    font-family: "nord-regular";
+    src: url("/fonts/nord-regular.woff2") format("woff2"),
+         url("/fonts/nord-regular.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  
   /* Button active state */
   #radial-menu-toggle.active {
     background-color: transparent;
@@ -305,7 +315,7 @@
   
   /* Apply NORD font to menu items */
   .nord-font {
-    font-family: "nord", sans-serif;
+    font-family: "nord-regular", sans-serif;
     font-weight: 400;
     font-style: normal;
     text-transform: uppercase;
