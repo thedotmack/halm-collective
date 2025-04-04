@@ -33,7 +33,7 @@
       id="pointer-icon"
       src="/h-point-outline-2.svg" 
       alt="Menu pointer"
-      class="w-[87.5%] transition-all duration-300 ease-in-out absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[50%] opacity-0 rotate-180"
+      class="w-[87.5%] transition-all duration-300 ease-in-out absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[42%] opacity-0 rotate-180"
     />
   </button>
   
@@ -77,7 +77,8 @@
         // Animate menu items out with initial delay
         menuItems.forEach(item => {
           item.classList.add('expanded');
-          // Keep delay for initial expansion
+          // Reset transition delay to original values
+          item.style.transitionDelay = '';
         });
       } else {
         // Close menu
@@ -107,6 +108,11 @@
           // Remove the delay when closing the menu
           item.style.transitionDelay = '0s';
           item.classList.remove('expanded');
+          
+          // Ensure expanded class is completely removed after animation
+          setTimeout(() => {
+            item.classList.remove('expanded');
+          }, 350); // Slightly longer than the transition duration
         });
       }
     }
@@ -154,8 +160,8 @@
           let rotationAngle = angle - 270;
           
           // Apply specific offsets for items that need adjustment
-          if (itemNumber === 1) rotationAngle -= 39; // Adjust item 1 pointing
-          if (itemNumber === 5) rotationAngle += 39; // Adjust item 5 pointing
+          if (itemNumber === 1) rotationAngle -= 30; // Adjust item 1 pointing
+          if (itemNumber === 5) rotationAngle += 30; // Adjust item 5 pointing
           
           // Match the 0.3s duration to be the same as the menu item scale duration
           pointerIcon.style.transition = 'transform 0.3s ease-in-out';
@@ -199,6 +205,15 @@
         activeMenuItem.classList.remove('item-active');
         activeMenuItem = null;
       }
+      
+      // Extra cleanup for expanded state when closing
+      if (!isMenuOpen) {
+        setTimeout(() => {
+          menuItems.forEach(item => {
+            item.classList.remove('expanded');
+          });
+        }, 350);
+      }
     };
 
     // Add a function to dynamically adjust rotation axis
@@ -238,11 +253,11 @@
     --delay-item5: 0.2s;
     
     /* Hover scale effect - increased by 0.05 */
-    --hover-scale: 1.15;
+    --hover-scale: 1.075;
     
     /* Button rotation axis - default is center */
     --button-origin-x: 50%;
-    --button-origin-y: 50%;
+    --button-origin-y: 40%;
   }
   
   /* Font loading */
