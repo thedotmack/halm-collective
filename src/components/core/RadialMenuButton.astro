@@ -9,15 +9,15 @@
 ></div>
 
 <!-- Floating Button Container -->
-<div class="fixed bottom-8 left-0 right-0 flex justify-center z-40 transition-all duration-300" id="radial-menu-container">
+<div class="fixed bottom-8 left-0 right-0 flex justify-center z-40 transition-all duration-300 ease-in-out" id="radial-menu-container">
   <button 
     id="radial-menu-toggle"
-    class="rounded-full bg-[#e0d6d477] p-5 transition-all duration-500 hover:scale-105 focus:outline-none backdrop-blur-xs z-50"
+    class="rounded-full bg-[#e0d6d477] p-5 transition-all duration-300 ease-in-out hover:scale-105 focus:outline-none backdrop-blur-xs z-50"
     aria-label="Open menu"
   >
     <!-- Menu Icon (H) -->
     <svg 
-      class="w-9 transition-all duration-300"
+      class="w-9 transition-all duration-300 ease-in-out"
       width="48" 
       height="36" 
       viewBox="0 0 231 171" 
@@ -30,11 +30,11 @@
   
   <!-- Radial Menu Items -->
   <div class="radial-menu">
-    <a href="#pillars" class="radial-menu-item item-1 nord-font">WELLNESS</a>
+    <a href="#pillars" class="radial-menu-item item-1 nord-font ml-1.5">WELLNESS</a>
     <a href="#schedule" class="radial-menu-item item-2 nord-font">COMMUNITY</a>
     <a href="#experience" class="radial-menu-item item-3 nord-font">CAFÉ</a>
     <a href="#gallery" class="radial-menu-item item-4 nord-font">SCHEDULE</a>
-    <a href="#footer" class="radial-menu-item item-5 nord-font">SPACES</a>
+    <a href="#footer" class="radial-menu-item item-5 nord-font pr-3">SPACES</a>
   </div>
 </div>
 
@@ -43,6 +43,7 @@
     const menuToggle = document.getElementById('radial-menu-toggle');
     const radialOverlay = document.getElementById('radial-overlay');
     const menuItems = document.querySelectorAll('.radial-menu-item');
+    const menuIcon = menuToggle?.querySelector('svg');
     
     let isMenuOpen = false;
     
@@ -58,9 +59,10 @@
         radialOverlay.classList.remove('pointer-events-none', 'bg-black/0');
         radialOverlay.classList.add('backdrop-blur-sm', 'bg-black/50');
         
-        // Animate menu items out
+        // Animate menu items out with initial delay
         menuItems.forEach(item => {
           item.classList.add('expanded');
+          // Keep delay for initial expansion
         });
       } else {
         // Close menu
@@ -70,12 +72,20 @@
         radialOverlay.classList.remove('backdrop-blur-sm', 'bg-black/50');
         radialOverlay.classList.add('bg-black/0');
         
+        // Reset SVG icon rotation when menu closes
+        if (menuIcon) {
+          menuIcon.style.transition = 'transform 0.3s ease-in-out';
+          menuIcon.style.transform = ''; // Reset to original state
+        }
+        
         setTimeout(() => {
           radialOverlay.classList.add('pointer-events-none');
         }, 300);
         
-        // Animate menu items in
+        // Animate menu items in without delay
         menuItems.forEach(item => {
+          // Remove the delay when closing the menu
+          item.style.transitionDelay = '0s';
           item.classList.remove('expanded');
         });
       }
@@ -92,19 +102,96 @@
       });
     }
     
+    // Track the currently active menu item
+    let activeMenuItem = null;
+    
+    // Add hover event listeners to each menu item
+    if (menuIcon) {
+      menuItems.forEach((item, index) => {
+        // Handle hover on menu items to rotate the icon
+        item.addEventListener('mouseenter', () => {
+          if (!isMenuOpen) return;
+          
+          // Remove active class from previous active item
+          if (activeMenuItem) {
+            activeMenuItem.classList.remove('item-active');
+          }
+          
+          // Set this as the new active item
+          activeMenuItem = item;
+          item.classList.add('item-active');
+          
+          // Get the angle from CSS variables
+          const itemNumber = index + 1;
+          const angleVar = `--angle-item${itemNumber}`;
+          let angle = getComputedStyle(document.documentElement)
+            .getPropertyValue(angleVar).trim();
+          
+          // Parse the angle (removing 'deg' if present)
+          angle = parseInt(angle);
+          
+          // Calculate rotation to point the icon toward the item
+          let rotationAngle = angle - 270;
+          
+          // Apply specific offsets for items that need adjustment
+          if (itemNumber === 1) rotationAngle -= 45; // Adjust item 1 pointing
+          if (itemNumber === 5) rotationAngle += 45; // Adjust item 5 pointing
+          
+          // Match the 0.3s duration to be the same as the menu item scale duration
+          menuIcon.style.transition = 'transform 0.3s ease-in-out';
+          menuIcon.style.transform = `rotate(${rotationAngle}deg)`;
+        });
+      });
+    }
+    
+    // Update the closing menu logic to reset the active item
     // Close menu when clicking on a menu item
     menuItems.forEach(item => {
       item.addEventListener('click', () => {
-        if (isMenuOpen) toggleMenu();
+        if (isMenuOpen) {
+          // Clear the active item when closing menu
+          if (activeMenuItem) {
+            activeMenuItem.classList.remove('item-active');
+            activeMenuItem = null;
+          }
+          toggleMenu();
+        }
       });
     });
+    
+    // Also reset the active item when the menu is closed using the overlay
+    if (radialOverlay) {
+      radialOverlay.addEventListener('click', () => {
+        if (isMenuOpen) {
+          // Clear active item
+          if (activeMenuItem) {
+            activeMenuItem.classList.remove('item-active');
+            activeMenuItem = null;
+          }
+          toggleMenu();
+        }
+      });
+    }
+    
+    // Also handle reset in the toggleMenu function
+    const originalToggleMenu = toggleMenu;
+    toggleMenu = function() {
+      const wasOpen = isMenuOpen;
+      originalToggleMenu();
+      
+      // If menu was open and is now closing, clear active item
+      if (wasOpen && !isMenuOpen && activeMenuItem) {
+        activeMenuItem.classList.remove('item-active');
+        activeMenuItem = null;
+      }
+    };
   });
 </script>
 
 <style>
   /* Configuration variables */
   :root {
-    /* Angle positions for each item */
+    /* Angle positions for each item - restore original values */
     --angle-item1: 210deg;
     --angle-item2: 225deg;
     --angle-item3: 270deg;
@@ -125,16 +212,24 @@
     --delay-item4: 0.15s;
     --delay-item5: 0.2s;
     
-    /* Hover scale effect */
-    --hover-scale: 1.2;
+    /* Hover scale effect - increased by 0.05 */
+    --hover-scale: 1.15;
   }
   
   /* Button active state */
   #radial-menu-toggle.active {
-    background-color: rgba(224, 214, 212, 0.9);
+    background-color: transparent;
+    transform: scale(1.1) translateY(-5%) rotate(90deg);
+    z-index: 1;
+    opacity: 0.9;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
   }
+
+  #radial-menu-toggle.active:hover svg {
+    transform: scale(0.95) !important;
+  }
+
   
   /* Radial menu container */
   .radial-menu {
@@ -163,7 +258,7 @@
     z-index: 40;
     opacity: 0;
     pointer-events: none;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.3s ease-in-out;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     white-space: nowrap;
     letter-spacing: 0.05em;
@@ -226,8 +321,15 @@
   }
   
   /* Hover effect - subtle scale for text-only items */
-  .radial-menu-item:hover {
+  .radial-menu-item:hover,
+  .radial-menu-item.item-active {
     transform: translateX(-50%) translate(var(--x), var(--y)) scale(var(--hover-scale));
     color: rgba(255, 255, 255, 0.95);
+    transition-delay: 0s !important; /* Remove delay on hover */
+  }
+  
+  /* Remove delay when toggling off the menu */
+  .radial-menu-item:not(.expanded) {
+    transition-delay: 0s !important;
   }
 </style>
