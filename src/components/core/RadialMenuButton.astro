@@ -39,11 +39,11 @@
   
   <!-- Radial Menu Items -->
   <div class="radial-menu">
-    <a href="#pillars" class="radial-menu-item item-1 nord-font ml-1.5">WELLNESS</a>
-    <a href="#schedule" class="radial-menu-item item-2 nord-font">COMMUNITY</a>
-    <a href="#experience" class="radial-menu-item item-3 nord-font">CAFÉ</a>
-    <a href="#gallery" class="radial-menu-item item-4 nord-font">SCHEDULE</a>
-    <a href="#footer" class="radial-menu-item item-5 nord-font pr-3">SPACES</a>
+    <button class="radial-menu-item item-1 nord-font ml-1.5">WELLNESS</button>
+    <button class="radial-menu-item item-2 nord-font">COMMUNITY</button>
+    <button class="radial-menu-item item-3 nord-font">CAFÉ</button>
+    <button class="radial-menu-item item-4 nord-font">SCHEDULE</button>
+    <button class="radial-menu-item item-5 nord-font pr-3">SPACES</button>
   </div>
 </div>
 
@@ -125,11 +125,11 @@
     // Track the currently active menu item
     let activeMenuItem = null;
     
-    // Add hover event listeners to each menu item
+    // Update event handlers for menu items
     if (pointerIcon) {
       menuItems.forEach((item, index) => {
-        // Handle hover on menu items to rotate the icon
-        item.addEventListener('mouseenter', () => {
+        // Handle hover/tap on menu items to rotate the icon
+        const activateItem = () => {
           if (!isMenuOpen) return;
           
           // Remove active class from previous active item
@@ -160,26 +160,21 @@
           // Match the 0.3s duration to be the same as the menu item scale duration
           pointerIcon.style.transition = 'transform 0.3s ease-in-out';
           pointerIcon.style.transform = `rotate(${rotationAngle}deg)`;
+        };
+        
+        // Add mouseenter event for desktop users
+        item.addEventListener('mouseenter', activateItem);
+        
+        // Add tap/click event (just activate, don't close menu)
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          activateItem();
+          // Note: We're not closing the menu on tap anymore
         });
       });
     }
     
-    // Update the closing menu logic to reset the active item
-    // Close menu when clicking on a menu item
-    menuItems.forEach(item => {
-      item.addEventListener('click', () => {
-        if (isMenuOpen) {
-          // Clear the active item when closing menu
-          if (activeMenuItem) {
-            activeMenuItem.classList.remove('item-active');
-            activeMenuItem = null;
-          }
-          toggleMenu();
-        }
-      });
-    });
-    
-    // Also reset the active item when the menu is closed using the overlay
+    // Update the closing menu logic to only close on main button or overlay
     if (radialOverlay) {
       radialOverlay.addEventListener('click', () => {
         if (isMenuOpen) {
@@ -283,7 +278,7 @@
     pointer-events: none;
   }
   
-  /* Menu items base style - text only, no background */
+  /* Menu items base style - now buttons instead of links */
   .radial-menu-item {
     position: absolute;
     bottom: 0;
@@ -303,6 +298,9 @@
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     white-space: nowrap;
     letter-spacing: 0.05em;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
   }
   
   /* Apply NORD font to menu items */
