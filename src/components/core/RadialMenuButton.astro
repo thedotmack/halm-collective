@@ -1,0 +1,233 @@
+---
+// This component creates a floating button that expands into a radial menu when clicked
+---
+
+<!-- Darkened overlay -->
+<div 
+  id="radial-overlay" 
+  class="fixed inset-0 bg-black/0 pointer-events-none transition-all duration-300 ease-in-out z-25"
+></div>
+
+<!-- Floating Button Container -->
+<div class="fixed bottom-8 left-0 right-0 flex justify-center z-40 transition-all duration-300" id="radial-menu-container">
+  <button 
+    id="radial-menu-toggle"
+    class="rounded-full bg-[#e0d6d477] p-5 transition-all duration-500 hover:scale-105 focus:outline-none backdrop-blur-xs z-50"
+    aria-label="Open menu"
+  >
+    <!-- Menu Icon (H) -->
+    <svg 
+      class="w-9 transition-all duration-300"
+      width="48" 
+      height="36" 
+      viewBox="0 0 231 171" 
+      fill="#fff" 
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M0 0H231V45H142V67H200V104H142V127H231V171H0V127H88V104H31V67H88V45H0V0Z" />
+    </svg>
+  </button>
+  
+  <!-- Radial Menu Items -->
+  <div class="radial-menu">
+    <a href="#pillars" class="radial-menu-item item-1 nord-font">WELLNESS</a>
+    <a href="#schedule" class="radial-menu-item item-2 nord-font">COMMUNITY</a>
+    <a href="#experience" class="radial-menu-item item-3 nord-font">CAFÉ</a>
+    <a href="#gallery" class="radial-menu-item item-4 nord-font">SCHEDULE</a>
+    <a href="#footer" class="radial-menu-item item-5 nord-font">SPACES</a>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.getElementById('radial-menu-toggle');
+    const radialOverlay = document.getElementById('radial-overlay');
+    const menuItems = document.querySelectorAll('.radial-menu-item');
+    
+    let isMenuOpen = false;
+    
+    // Function to toggle menu state
+    function toggleMenu() {
+      isMenuOpen = !isMenuOpen;
+      
+      if (isMenuOpen) {
+        // Open menu
+        menuToggle.classList.add('active');
+        
+        // Show the overlay with blur
+        radialOverlay.classList.remove('pointer-events-none', 'bg-black/0');
+        radialOverlay.classList.add('backdrop-blur-sm', 'bg-black/50');
+        
+        // Animate menu items out
+        menuItems.forEach(item => {
+          item.classList.add('expanded');
+        });
+      } else {
+        // Close menu
+        menuToggle.classList.remove('active');
+        
+        // Hide overlay
+        radialOverlay.classList.remove('backdrop-blur-sm', 'bg-black/50');
+        radialOverlay.classList.add('bg-black/0');
+        
+        setTimeout(() => {
+          radialOverlay.classList.add('pointer-events-none');
+        }, 300);
+        
+        // Animate menu items in
+        menuItems.forEach(item => {
+          item.classList.remove('expanded');
+        });
+      }
+    }
+    
+    // Event listeners
+    if (menuToggle) {
+      menuToggle.addEventListener('click', toggleMenu);
+    }
+    
+    if (radialOverlay) {
+      radialOverlay.addEventListener('click', () => {
+        if (isMenuOpen) toggleMenu();
+      });
+    }
+    
+    // Close menu when clicking on a menu item
+    menuItems.forEach(item => {
+      item.addEventListener('click', () => {
+        if (isMenuOpen) toggleMenu();
+      });
+    });
+  });
+</script>
+
+<style>
+  /* Configuration variables */
+  :root {
+    /* Angle positions for each item */
+    --angle-item1: 210deg;
+    --angle-item2: 225deg;
+    --angle-item3: 270deg;
+    --angle-item4: 315deg;
+    --angle-item5: 330deg;
+    
+    /* Distance for each item */
+    --distance-item1: 140px;
+    --distance-item2: 160px;
+    --distance-item3: 150px;
+    --distance-item4: 160px;
+    --distance-item5: 140px;
+    
+    /* Animation timing */
+    --delay-item1: 0s;
+    --delay-item2: 0.05s;
+    --delay-item3: 0.1s;
+    --delay-item4: 0.15s;
+    --delay-item5: 0.2s;
+    
+    /* Hover scale effect */
+    --hover-scale: 1.2;
+  }
+  
+  /* Button active state */
+  #radial-menu-toggle.active {
+    background-color: rgba(224, 214, 212, 0.9);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+  }
+  
+  /* Radial menu container */
+  .radial-menu {
+    position: absolute;
+    width: 100%;
+    height: 200px;
+    bottom: -50px; /* Position above the button */
+    left: 0;
+    right: 0;
+    pointer-events: none;
+  }
+  
+  /* Menu items base style - text only, no background */
+  .radial-menu-item {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 400;
+    font-size: 16px;
+    z-index: 40;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+  }
+  
+  /* Apply NORD font to menu items */
+  .nord-font {
+    font-family: "nord", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    text-transform: uppercase;
+  }
+  
+  /* Radial positions for menu items */
+  .radial-menu-item.expanded {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translate(var(--x), var(--y)) scale(1);
+  }
+  
+  /* Arc above the button - perfectly centered */
+  .item-1 {
+    --angle: var(--angle-item1);
+    --distance: var(--distance-item1);
+    --x: calc(cos(var(--angle)) * var(--distance));
+    --y: calc(sin(var(--angle)) * var(--distance));
+    transition-delay: var(--delay-item1);
+  }
+  
+  .item-2 {
+    --angle: var(--angle-item2);
+    --distance: var(--distance-item2);
+    --x: calc(cos(var(--angle)) * var(--distance));
+    --y: calc(sin(var(--angle)) * var(--distance));
+    transition-delay: var(--delay-item2);
+  }
+  
+  .item-3 {
+    --angle: var(--angle-item3);
+    --distance: var(--distance-item3);
+    --x: calc(cos(var(--angle)) * var(--distance));
+    --y: calc(sin(var(--angle)) * var(--distance));
+    transition-delay: var(--delay-item3);
+  }
+  
+  .item-4 {
+    --angle: var(--angle-item4);
+    --distance: var(--distance-item4);
+    --x: calc(cos(var(--angle)) * var(--distance));
+    --y: calc(sin(var(--angle)) * var(--distance));
+    transition-delay: var(--delay-item4);
+  }
+  
+  .item-5 {
+    --angle: var(--angle-item5);
+    --distance: var(--distance-item5);
+    --x: calc(cos(var(--angle)) * var(--distance));
+    --y: calc(sin(var(--angle)) * var(--distance));
+    transition-delay: var(--delay-item5);
+  }
+  
+  /* Hover effect - subtle scale for text-only items */
+  .radial-menu-item:hover {
+    transform: translateX(-50%) translate(var(--x), var(--y)) scale(var(--hover-scale));
+    color: rgba(255, 255, 255, 0.95);
+  }
+</style>
