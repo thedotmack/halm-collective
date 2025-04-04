@@ -5,6 +5,9 @@ import MainLayout from '../layouts/MainLayout.astro';
 <MainLayout title="HALM Collective - Mobile Preview">
   <div class="mobile-preview-container">
     <!-- <h1 class="preview-title">HALM Mobile First Design Preview</h1> -->
+    <div class="leave-frame-container">
+      <a href="/site-content" class="leave-frame-link" target="_blank">Leave Frame →</a>
+    </div>
     <div class="device-container">
       <div class="device-notch"></div>
       <div class="mobile-frame">
@@ -86,6 +89,27 @@ import MainLayout from '../layouts/MainLayout.astro';
     height: 812px;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) inset;
+  }
+
+  .leave-frame-container {
+    margin-bottom: 20px;
+    text-align: right;
+    width: 375px;
+  }
+
+  .leave-frame-link {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+  }
+
+  .leave-frame-link:hover {
+    background-color: rgba(255, 255, 255, 0.25);
   }
 
   .mobile-frame iframe {
