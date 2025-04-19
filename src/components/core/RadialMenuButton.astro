@@ -1,4 +1,5 @@
 ---
+import MenuOverlay from './MenuOverlay.astro';
 // This component creates a floating button that expands into a radial menu when clicked
 ---
 
@@ -7,6 +8,9 @@
   id="radial-overlay" 
   class="fixed inset-0 bg-black/0 pointer-events-none transition-all duration-300 ease-in-out z-25"
 ></div>
+
+<!-- Main Menu Overlay imported here -->
+<MenuOverlay />
 
 <!-- Floating Button Container -->
 <div class="fixed bottom-8 left-0 right-0 flex justify-center z-40 transition-all duration-300 ease-in-out" id="radial-menu-container">
@@ -55,10 +59,55 @@
     const defaultIcon = document.getElementById('default-icon');
     const pointerIcon = document.getElementById('pointer-icon');
     
+    // Add menu overlay toggle functionality
+    const menuOverlay = document.getElementById('menu-overlay');
+    const closeMenuButton = document.getElementById('close-menu');
+    
     let isMenuOpen = false;
     
-    // Function to toggle menu state
-    function toggleMenu() {
+    // Function to toggle the main menu overlay
+    function toggleMainMenu() {
+      if (menuOverlay) {
+        menuOverlay.classList.toggle('hidden');
+        
+        if (!menuOverlay.classList.contains('hidden')) {
+          // When opening main menu, trigger first menu link
+          const firstMenuLink = document.querySelector('.menu-link');
+          if (firstMenuLink) {
+            // Create and dispatch mouseenter event
+            const event = new MouseEvent('mouseenter', {
+              'view': window,
+              'bubbles': true,
+              'cancelable': true
+            });
+            firstMenuLink.dispatchEvent(event);
+          }
+        }
+      }
+    }
+    
+    // Add event listener to close menu button
+    if (closeMenuButton) {
+      closeMenuButton.addEventListener('click', () => {
+        if (menuOverlay) {
+          menuOverlay.classList.add('hidden');
+        }
+      });
+    }
+    
+    // Add click handler for radial toggle to open main menu
+    if (menuToggle) {
+      menuToggle.addEventListener('click', (e) => {
+        // Toggle main menu overlay
+        toggleMainMenu();
+        
+        // Stop event propagation
+        e.stopPropagation();
+      });
+    }
+    
+    // Function to toggle radial menu state
+    function toggleRadialMenu() {
       isMenuOpen = !isMenuOpen;
       
       if (isMenuOpen) {
@@ -128,17 +177,6 @@
       }
     }
     
-    // Event listeners
-    if (menuToggle) {
-      menuToggle.addEventListener('click', toggleMenu);
-    }
-    
-    if (radialOverlay) {
-      radialOverlay.addEventListener('click', () => {
-        if (isMenuOpen) toggleMenu();
-      });
-    }
-    
     // Track the currently active menu item
     let activeMenuItem = null;
     
@@ -190,33 +228,6 @@
         });
       });
     }
-    
-    // Update the closing menu logic to only close on main button or overlay
-    if (radialOverlay) {
-      radialOverlay.addEventListener('click', () => {
-        if (isMenuOpen) {
-          // Clear active item
-          if (activeMenuItem) {
-            activeMenuItem.classList.remove('item-active');
-            activeMenuItem = null;
-          }
-          toggleMenu();
-        }
-      });
-    }
-    
-    // Also handle reset in the toggleMenu function
-    const originalToggleMenu = toggleMenu;
-    toggleMenu = function() {
-      const wasOpen = isMenuOpen;
-      originalToggleMenu();
-      
-      // If menu was open and is now closing, clear active item
-      if (wasOpen && !isMenuOpen && activeMenuItem) {
-        activeMenuItem.classList.remove('item-active');
-        activeMenuItem = null;
-      }
-    };
 
     // Add a function to dynamically adjust rotation axis
     function adjustRotationAxis(x, y) {

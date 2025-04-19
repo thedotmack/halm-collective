@@ -1,7 +1,14 @@
 ---
+import MenuCarousel from '../ui/MenuCarousel';
+import { carouselContent } from '../ui/MenuCarouselContent';
+
+const menuItems = carouselContent.map(item => ({
+  href: `#${item.id}`,
+  label: item.title
+}));
 ---
 
-<div id="menu-overlay" class="fixed inset-0 bg-black bg-opacity-95 z-50 flex flex-col justify-center items-center hidden">
+<div id="menu-overlay" class="fixed inset-0 bg-black bg-opacity-95 z-[100] flex flex-col justify-between items-center hidden py-12">
   <button 
     id="close-menu"
     class="absolute top-6 right-6 text-white p-2"
@@ -13,16 +20,23 @@
     </svg>
   </button>
   
-  <div class="flex flex-col items-center space-y-8 mb-12">
-    <a href="#hero" class="text-2xl font-light tracking-wider hover:text-[#D2CBBA] transition-colors">HALM COLLECTIVE</a>
-    <a href="#pillars" class="text-2xl font-light tracking-wider hover:text-[#D2CBBA] transition-colors">WELLNESS</a>
-    <a href="#experience" class="text-2xl font-light tracking-wider hover:text-[#D2CBBA] transition-colors">CAFÉ</a>
-    <a href="#schedule" class="text-2xl font-light tracking-wider hover:text-[#D2CBBA] transition-colors">COMMUNITY</a>
-    <a href="#membership" class="text-2xl font-light tracking-wider hover:text-[#D2CBBA] transition-colors">MEMBERSHIP</a>
-    <a href="#footer" class="text-2xl font-light tracking-wider hover:text-[#D2CBBA] transition-colors">CONTACT</a>
+  <div class="w-full flex-1 flex items-center justify-center mb-8 mt-8 max-h-[60vh]">
+    <MenuCarousel client:load />
   </div>
   
-  <div class="flex space-x-6 mt-12">
+  <div class="flex flex-col items-center space-y-4 mb-6">
+    {menuItems.map((item, index) => (
+      <a 
+        href={item.href} 
+        class="menu-link text-2xl font-light tracking-wider hover:text-[#D2CBBA] transition-colors"
+        data-index={index}
+      >
+        {item.label}
+      </a>
+    ))}
+  </div>
+  
+  <div class="flex space-x-6">
     <a href="https://instagram.com/halmcollective" target="_blank" rel="noopener noreferrer" class="text-white hover:text-[#D2CBBA] transition-colors">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -37,3 +51,31 @@
     </a>
   </div>
 </div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const menuLinks = document.querySelectorAll('.menu-link');
+    
+    // Handle menu link hover
+    menuLinks.forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        const index = parseInt(link.getAttribute('data-index') || '0');
+        
+        // Create custom event to communicate with React component
+        const event = new CustomEvent('update-carousel', { 
+          detail: { index } 
+        });
+        window.dispatchEvent(event);
+        
+        // Add active class to current link
+        menuLinks.forEach(l => l.classList.remove('text-[#D2CBBA]'));
+        link.classList.add('text-[#D2CBBA]');
+      });
+    });
+    
+    // Set first item as active by default
+    if (menuLinks.length > 0) {
+      menuLinks[0].classList.add('text-[#D2CBBA]');
+    }
+  });
+</script>

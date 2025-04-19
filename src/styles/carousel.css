@@ -1,0 +1,59 @@
+.embla {
+  --slide-spacing: 1rem;
+  --slide-size: 100%;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.embla__viewport {
+  overflow: hidden;
+  height: 100%;
+}
+
+.embla__container {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.embla__slide {
+  flex: 0 0 var(--slide-size);
+  min-width: 0;
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.embla__slide__content {
+  width: 100%;
+  max-width: 600px;
+  padding: 1.5rem;
+}
+
+/* Fade animation for slides */
+.embla__slide {
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+.embla__slide.is-selected {
+  opacity: 1;
+}
+
+/* Custom styling for menu carousel content */
+.embla__slide .bg-black\/50 {
+  border: 1px solid rgba(210, 203, 186, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.embla__slide.is-selected .bg-black\/50 {
+  border: 1px solid rgba(210, 203, 186, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
