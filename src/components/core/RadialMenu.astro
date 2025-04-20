@@ -1,5 +1,14 @@
 ---
 // This component creates a floating button that expands into a radial menu when clicked
+import { AstroCarousel } from "@/components/ui/astro-carousel";
+
+const slides = [
+  { content: "Wellness Content" },
+  { content: "Community Content" },
+  { content: "Café Content" },
+  { content: "Schedule Content" },
+  { content: "Spaces Content" }
+];
 ---
 
 <!-- Darkened overlay -->
@@ -7,6 +16,14 @@
   id="radial-overlay" 
   class="fixed inset-0 bg-black/0 pointer-events-none transition-all duration-300 ease-in-out z-25"
 ></div>
+
+<!-- Carousel Container -->
+<div 
+  id="radial-carousel" 
+  class="fixed inset-x-0 top-1/2 -translate-y-1/2 w-full h-[70vh] z-30 opacity-0 pointer-events-none transition-all duration-300 ease-in-out"
+>
+  <AstroCarousel slides={slides} id="menu-carousel" client:visible />
+</div>
 
 <!-- Floating Button Container -->
 <div class="fixed bottom-8 left-0 right-0 flex justify-center z-40 transition-all duration-300 ease-in-out" id="radial-menu-container">
@@ -54,8 +71,11 @@
     const menuItems = document.querySelectorAll('.radial-menu-item');
     const defaultIcon = document.getElementById('default-icon');
     const pointerIcon = document.getElementById('pointer-icon');
+    const radialCarousel = document.getElementById('radial-carousel');
     
     let isMenuOpen = false;
+    let currentCarouselCategory = null;
+    let currentSlideIndex = 0;
     
     // Function to toggle menu state
     function toggleMenu() {
@@ -97,6 +117,12 @@
         if (pointerIcon) {
           pointerIcon.style.transition = 'transform 0.3s ease-in-out';
           pointerIcon.style.transform = ''; // Reset to original state
+        }
+        
+        // Hide carousel if open
+        if (radialCarousel) {
+          radialCarousel.classList.add('opacity-0', 'pointer-events-none');
+          currentCarouselCategory = null;
         }
         
         // First, trigger the reverse animation by changing the transform scale
@@ -177,6 +203,12 @@
           // Match the 0.3s duration to be the same as the menu item scale duration
           pointerIcon.style.transition = 'transform 0.3s ease-in-out';
           pointerIcon.style.transform = `rotate(${rotationAngle}deg)`;
+          
+          // Get the category from the item text
+          const category = item.textContent.trim().toLowerCase();
+          
+          // Show the carousel with the specific content
+          showCarousel(category, itemNumber - 1);
         };
         
         // Add mouseenter event for desktop users
@@ -189,6 +221,26 @@
           // Note: We're not closing the menu on tap anymore
         });
       });
+    }
+    
+    // Function to show carousel with specific content
+    function showCarousel(category, slideIndex) {
+      if (!radialCarousel) return;
+      
+      // Only proceed if this is a new category or carousel is hidden
+      if (category !== currentCarouselCategory || radialCarousel.classList.contains('opacity-0')) {
+        currentCarouselCategory = category;
+        currentSlideIndex = slideIndex;
+        
+        // Show carousel
+        radialCarousel.classList.remove('opacity-0', 'pointer-events-none');
+        
+        // For React components hydrated with client:visible, we need to use a different approach
+        // to control the carousel. We'll dispatch a custom event that the React component can listen for.
+        window.dispatchEvent(new CustomEvent('carousel-navigate', { 
+          detail: { slideIndex }
+        }));
+      }
     }
     
     // Update the closing menu logic to only close on main button or overlay
@@ -223,10 +275,29 @@
       document.documentElement.style.setProperty('--button-origin-x', x);
       document.documentElement.style.setProperty('--button-origin-y', y);
     }
-    
-    // You can call this function to change the rotation axis
-    // For example: adjustRotationAxis('75%', '25%') would move the axis to top-right
-    // Or call it based on user interactions or viewport changes
+  });
+</script>
+
+<!-- Add React component event listener -->
+<script>
+  // This script will run in the browser and connect our vanilla JS with the React carousel
+  document.addEventListener('DOMContentLoaded', () => {
+    // Wait for the carousel component to be hydrated
+    setTimeout(() => {
+      window.addEventListener('carousel-navigate', (e) => {
+        const carousel = document.getElementById('menu-carousel');
+        if (!carousel) return;
+        
+        // Find the embla API on the carousel element
+        // This might be attached to a different element depending on the exact structure
+        const emblaNodes = document.querySelectorAll('[data-embla-api]');
+        const emblaApi = Array.from(emblaNodes).map(node => node.__emblaApi__).find(api => api);
+        
+        if (emblaApi && typeof emblaApi.scrollTo === 'function') {
+          emblaApi.scrollTo(e.detail.slideIndex, true);
+        }
+      });
+    }, 500); // Give React time to hydrate the component
   });
 </script>
 
