@@ -1,0 +1,27 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Community | HALM">
+  <div class="container mx-auto py-12">
+    <h1 class="text-4xl font-bold mb-8">Community</h1>
+    <p class="mb-6">Join our vibrant community of like-minded individuals who share a passion for wellness, creativity, and connection.</p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+      <a href="/community/events" class="card p-6 shadow-md hover:shadow-lg transition">
+        <h2 class="text-2xl font-semibold mb-2">Events</h2>
+        <p>Discover upcoming community gatherings, workshops, and special events.</p>
+      </a>
+      
+      <a href="/community/games" class="card p-6 shadow-md hover:shadow-lg transition">
+        <h2 class="text-2xl font-semibold mb-2">Games</h2>
+        <p>Connect through play with our various community games and activities.</p>
+      </a>
+      
+      <a href="/community/memberships" class="card p-6 shadow-md hover:shadow-lg transition">
+        <h2 class="text-2xl font-semibold mb-2">Memberships</h2>
+        <p>Explore membership options and benefits of joining the HALM community.</p>
+      </a>
+    </div>
+  </div>
+</MainLayout>

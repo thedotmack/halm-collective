@@ -1,10 +1,8 @@
-Home
-----------
 Collective
   Villa
   Garden
   Rooftop
-  Podcast (Room information, Booking system)
+  Podcast
   Meet
   Work
 ----------
@@ -14,19 +12,14 @@ Cafe
   Food
 ----------
 Wellness
-  
-  Reformer Classes -> CTA Schedule / Book Class
-  (Content: About, Schedule, Instructors)
-
-  Reformer 1:1 -> CTA simple interest form
-  
+  Reformer Classes
+  Reformer 1:1
   Personal Training 1:1
-    Transform -> Interactive consultation form
-      Fat Loss -> Interactive consultation form
-      Muscle Gain -> Interactive consultation form
-    Heal (Rehab) -> Interactive consultation form
-  
-  Nutrition -> Interactive consultation form
+    Transform
+      Fat Loss
+      Muscle Gain
+    Heal (Rehab)
+  Nutrition
 ----------
 Community
   Events
@@ -34,7 +27,8 @@ Community
   Memberships
 ----------
 Blog
-(Content: Articles on brand)
+  All Posts
+  Category Posts
+  Single Post
 -----------
 Careers
-(Content: Employment opportunities, Application process)

@@ -2,12 +2,73 @@
 // This component creates a floating button that expands into a radial menu when clicked
 import { AstroCarousel } from "@/components/ui/astro-carousel";
 
+// Replace the content with actual navigation links
 const slides = [
-  { content: "Wellness Content" },
-  { content: "Community Content" },
-  { content: "Café Content" },
-  { content: "Schedule Content" },
-  { content: "Spaces Content" }
+  { 
+    content: (
+      `<div class="menu-section">
+        <ul class="menu-list">
+          <li><a href="/wellness" class="menu-link">Wellness</a></li>
+          <li><a href="/wellness/reformer-classes" class="menu-link">Pilates</a></li>
+          <li><a href="/wellness/reformer-1-1" class="menu-link">Reformer 1:1</a></li>
+          <li><a href="/wellness/personal-training" class="menu-link">Training 1:1</a></li>
+          <li><a href="/wellness/personal-training/transform" class="menu-link">Transform</a></li>
+          <li><a href="/wellness/personal-training/heal" class="menu-link">Heal (Rehab)</a></li>
+          <li><a href="/wellness/nutrition" class="menu-link">Nutrition</a></li>
+        </ul>
+      </div>`
+    )
+  },
+  { 
+    content: (
+      `<div class="menu-section">
+        <ul class="menu-list">
+          <li><a href="/community" class="menu-link">Community</a></li>
+          <li><a href="/community/events" class="menu-link">Events</a></li>
+          <li><a href="/community/games" class="menu-link">Games</a></li>
+          <li><a href="/community/membership" class="menu-link">Membership</a></li>
+        </ul>
+      </div>`
+    )
+  },
+  { 
+    content: (
+      `<div class="menu-section">
+        <ul class="menu-list">
+          <li><a href="/cafe" class="menu-link">Café</a></li>
+          <li><a href="/cafe/halm-coffee" class="menu-link">HALM Coffee</a></li>
+          <li><a href="/cafe/drinks" class="menu-link">Drinks</a></li>
+          <li><a href="/cafe/food" class="menu-link">Food</a></li>
+        </ul>
+      </div>`
+    )
+  },
+  { 
+    content: (
+      `<div class="menu-section">
+        <ul class="menu-list">
+          <li><a href="/schedule" class="menu-link">Schedule</a></li>
+          <li><a href="/wellness/reformer-classes#schedule" class="menu-link">Reformer</a></li>
+          <li><a href="/community/events#upcoming" class="menu-link">Events</a></li>
+        </ul>
+      </div>`
+    )
+  },
+  { 
+    content: (
+      `<div class="menu-section">
+        <ul class="menu-list">
+          <li><a href="/collective" class="menu-link">Spaces</a></li>
+          <li><a href="/collective/villa" class="menu-link">Villa</a></li>
+          <li><a href="/collective/garden" class="menu-link">Garden</a></li>
+          <li><a href="/collective/rooftop" class="menu-link">Rooftop</a></li>
+          <li><a href="/collective/podcast" class="menu-link">Podcast</a></li>
+          <li><a href="/collective/meet" class="menu-link">Meet</a></li>
+          <li><a href="/collective/work" class="menu-link">Work</a></li>
+        </ul>
+      </div>`
+    )
+  }
 ];
 ---
 
@@ -168,6 +229,73 @@ const slides = [
     // Track the currently active menu item
     let activeMenuItem = null;
     
+    // Function to rotate pointer icon based on menu item
+    function rotatePointerToItem(itemNumber) {
+      if (!pointerIcon || !isMenuOpen) return;
+      
+      // Get the angle from CSS variables
+      const angleVar = `--angle-item${itemNumber}`;
+      let angle = getComputedStyle(document.documentElement)
+        .getPropertyValue(angleVar).trim();
+      
+      // Parse the angle (removing 'deg' if present)
+      angle = parseInt(angle);
+      
+      // Calculate rotation to point the icon toward the item
+      let rotationAngle = angle - 270;
+      
+      // Apply specific offsets for items that need adjustment
+      if (itemNumber === 1) rotationAngle -= 30; // Adjust item 1 pointing
+      if (itemNumber === 5) rotationAngle += 30; // Adjust item 5 pointing
+      
+      return rotationAngle;
+    }
+    
+    // Function to interpolate between two values
+    function lerp(start, end, factor) {
+      return start + (end - start) * factor;
+    }
+    
+    // Function to animate menu based on scroll progress
+    function animateMenuOnScroll(slidePosition) {
+      if (!isMenuOpen) return;
+      
+      // Calculate the current and next slide indexes
+      const currentIndex = Math.floor(slidePosition);
+      const nextIndex = Math.min(currentIndex + 1, menuItems.length - 1);
+      
+      // Calculate the progress between the current and next slide (0-1)
+      const progress = slidePosition - currentIndex;
+      
+      // Set active states for menu items but without opacity transitions
+      menuItems.forEach((item, i) => {
+        if (i === currentIndex || (i === nextIndex && progress > 0)) {
+          item.classList.add('item-active');
+        } else {
+          item.classList.remove('item-active');
+        }
+      });
+      
+      // Get rotation angles for current and next items
+      const currentRotation = rotatePointerToItem(currentIndex + 1);
+      const nextRotation = rotatePointerToItem(nextIndex + 1);
+      
+      // Interpolate between the rotation angles
+      if (currentRotation !== undefined && nextRotation !== undefined) {
+        const interpolatedRotation = lerp(currentRotation, nextRotation, progress);
+        
+        // Apply rotation to pointer icon
+        pointerIcon.style.transition = progress === 0 || progress === 1 ? 'transform 0.3s ease-in-out' : 'none';
+        pointerIcon.style.transform = `rotate(${interpolatedRotation}deg)`;
+      }
+    }
+    
+    // Listen for scroll progress updates from the carousel
+    window.addEventListener('carousel-scroll-progress', (e) => {
+      const { slidePosition } = e.detail;
+      animateMenuOnScroll(slidePosition);
+    });
+
     // Update event handlers for menu items
     if (pointerIcon) {
       menuItems.forEach((item, index) => {
@@ -184,31 +312,18 @@ const slides = [
           activeMenuItem = item;
           item.classList.add('item-active');
           
-          // Get the angle from CSS variables
-          const itemNumber = index + 1;
-          const angleVar = `--angle-item${itemNumber}`;
-          let angle = getComputedStyle(document.documentElement)
-            .getPropertyValue(angleVar).trim();
-          
-          // Parse the angle (removing 'deg' if present)
-          angle = parseInt(angle);
-          
-          // Calculate rotation to point the icon toward the item
-          let rotationAngle = angle - 270;
-          
-          // Apply specific offsets for items that need adjustment
-          if (itemNumber === 1) rotationAngle -= 30; // Adjust item 1 pointing
-          if (itemNumber === 5) rotationAngle += 30; // Adjust item 5 pointing
-          
-          // Match the 0.3s duration to be the same as the menu item scale duration
-          pointerIcon.style.transition = 'transform 0.3s ease-in-out';
-          pointerIcon.style.transform = `rotate(${rotationAngle}deg)`;
+          // Apply rotation using the common function
+          const rotationAngle = rotatePointerToItem(index + 1);
+          if (rotationAngle !== undefined) {
+            pointerIcon.style.transition = 'transform 0.3s ease-in-out';
+            pointerIcon.style.transform = `rotate(${rotationAngle}deg)`;
+          }
           
           // Get the category from the item text
           const category = item.textContent.trim().toLowerCase();
           
           // Show the carousel with the specific content
-          showCarousel(category, itemNumber - 1);
+          showCarousel(category, index);
         };
         
         // Add mouseenter event for desktop users
@@ -275,6 +390,54 @@ const slides = [
       document.documentElement.style.setProperty('--button-origin-x', x);
       document.documentElement.style.setProperty('--button-origin-y', y);
     }
+
+    // New function to update menu state based on carousel slide
+    function updateMenuFromCarousel(slideIndex) {
+      if (!isMenuOpen) return;
+      
+      // Remove active class from previous item
+      if (activeMenuItem) {
+        activeMenuItem.classList.remove('item-active');
+      }
+      
+      // Set the new active item based on slide index
+      const newActiveMenuItem = menuItems[slideIndex];
+      if (newActiveMenuItem) {
+        activeMenuItem = newActiveMenuItem;
+        activeMenuItem.classList.add('item-active');
+        
+        // Update pointer icon rotation
+        const itemNumber = slideIndex + 1;
+        const angleVar = `--angle-item${itemNumber}`;
+        let angle = getComputedStyle(document.documentElement)
+          .getPropertyValue(angleVar).trim();
+        
+        // Parse the angle (removing 'deg' if present)
+        angle = parseInt(angle);
+        
+        // Calculate rotation to point the icon toward the item
+        let rotationAngle = angle - 270;
+        
+        // Apply specific offsets for items that need adjustment
+        if (itemNumber === 1) rotationAngle -= 30; // Adjust item 1 pointing
+        if (itemNumber === 5) rotationAngle += 30; // Adjust item 5 pointing
+        
+        // Match the 0.3s duration to be the same as the menu item scale duration
+        if (pointerIcon) {
+          pointerIcon.style.transition = 'transform 0.3s ease-in-out';
+          pointerIcon.style.transform = `rotate(${rotationAngle}deg)`;
+        }
+        
+        // Update current category from the menu item text
+        currentCarouselCategory = activeMenuItem.textContent.trim().toLowerCase();
+        currentSlideIndex = slideIndex;
+      }
+    }
+
+    // Listen for carousel slide change events
+    window.addEventListener('carousel-slide-change', (e) => {
+      updateMenuFromCarousel(e.detail.slideIndex);
+    });
   });
 </script>
 
@@ -282,192 +445,65 @@ const slides = [
 <script>
   // This script will run in the browser and connect our vanilla JS with the React carousel
   document.addEventListener('DOMContentLoaded', () => {
-    // Wait for the carousel component to be hydrated
-    setTimeout(() => {
+    // Global variable to store the Embla API once we find it
+    let emblaApiInstance = null;
+    
+    // Function to find the Embla API
+    function findEmblaApi() {
+      const emblaNodes = document.querySelectorAll('[data-embla-api]');
+      for (const node of emblaNodes) {
+        if (node.__emblaApi__ && typeof node.__emblaApi__.scrollTo === 'function') {
+          return node.__emblaApi__;
+        }
+      }
+      return null;
+    }
+    
+    // Set up the two-way synchronization
+    function setupSynchronization() {
+      // Try to get the Embla API
+      emblaApiInstance = findEmblaApi();
+      
+      if (!emblaApiInstance) {
+        // If we couldn't find it, try again in a moment
+        console.log("Embla API not found yet, retrying...");
+        setTimeout(setupSynchronization, 200);
+        return;
+      }
+      
+      console.log("Embla API found, setting up synchronization");
+      
+      // Listen for our custom navigation events
       window.addEventListener('carousel-navigate', (e) => {
-        const carousel = document.getElementById('menu-carousel');
-        if (!carousel) return;
-        
-        // Find the embla API on the carousel element
-        // This might be attached to a different element depending on the exact structure
-        const emblaNodes = document.querySelectorAll('[data-embla-api]');
-        const emblaApi = Array.from(emblaNodes).map(node => node.__emblaApi__).find(api => api);
-        
-        if (emblaApi && typeof emblaApi.scrollTo === 'function') {
-          emblaApi.scrollTo(e.detail.slideIndex, true);
+        if (emblaApiInstance && typeof emblaApiInstance.scrollTo === 'function') {
+          emblaApiInstance.scrollTo(e.detail.slideIndex, true);
         }
       });
-    }, 500); // Give React time to hydrate the component
+      
+      // Listen for carousel changes
+      emblaApiInstance.on('select', () => {
+        const slideIndex = emblaApiInstance.selectedScrollSnap();
+        console.log("Carousel changed to slide:", slideIndex);
+        
+        // Dispatch event to update the menu
+        window.dispatchEvent(new CustomEvent('carousel-slide-change', {
+          detail: { slideIndex }
+        }));
+      });
+
+      // Listen for scroll progress updates
+      emblaApiInstance.on('scroll', () => {
+        const scrollProgress = emblaApiInstance.scrollProgress();
+        const slidePosition = scrollProgress * (menuItems.length - 1);
+        
+        // Dispatch event to animate menu based on scroll progress
+        window.dispatchEvent(new CustomEvent('carousel-scroll-progress', {
+          detail: { slidePosition }
+        }));
+      });
+    }
+    
+    // Start looking for the Embla API after a delay to allow for hydration
+    setTimeout(setupSynchronization, 500);
   });
 </script>
-
-<style>
-  /* Configuration variables */
-  :root {
-    /* Angle positions for each item - restore original values */
-    --angle-item1: 210deg;
-    --angle-item2: 225deg;
-    --angle-item3: 270deg;
-    --angle-item4: 315deg;
-    --angle-item5: 330deg;
-    
-    /* Distance for each item */
-    --distance-item1: 140px;
-    --distance-item2: 160px;
-    --distance-item3: 150px;
-    --distance-item4: 160px;
-    --distance-item5: 140px;
-    
-    /* Animation timing */
-    --delay-item1: 0s;
-    --delay-item2: 0.05s;
-    --delay-item3: 0.1s;
-    --delay-item4: 0.15s;
-    --delay-item5: 0.2s;
-    
-    /* Hover scale effect - increased by 0.05 */
-    --hover-scale: 1.075;
-    
-    /* Button rotation axis - default is center */
-    --button-origin-x: 50%;
-    --button-origin-y: 40%;
-  }
-  
-  /* Font loading */
-  @font-face {
-    font-family: "nord-regular";
-    src: url("/fonts/nord-regular.woff2") format("woff2"),
-         url("/fonts/nord-regular.woff") format("woff"),
-          url("/fonts/nord-regular.ttf") format("truetype");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-  
-  /* Button active state */
-  #radial-menu-toggle.active {
-    background-color: transparent;
-    /* transform: scale(0.9) translateY(5%); */
-    z-index: 1;
-    /* opacity: 0.9; */
-    /* box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); */
-    transition: all 0.3s ease-in-out;
-    transform-origin: var(--button-origin-x) var(--button-origin-y);
-  }
-
-  /* Apply transform-origin to the button for rotation */
-  #radial-menu-toggle {
-    transform-origin: var(--button-origin-x) var(--button-origin-y);
-  }
-  
-  /* Apply transform-origin to icons for proper rotation */
-  #default-icon, #pointer-icon {
-    transition: opacity 0.3s ease-in-out;
-    transform-origin: var(--button-origin-x) var(--button-origin-y);
-  }
-  
-  /* Radial menu container */
-  .radial-menu {
-    position: absolute;
-    width: 100%;
-    height: 200px;
-    bottom: -50px; /* Position above the button */
-    left: 0;
-    right: 0;
-    pointer-events: none;
-  }
-  
-  /* Menu items base style - now buttons instead of links */
-  .radial-menu-item {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%) scale(0);
-    background: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: 400;
-    font-size: 16px;
-    z-index: 40;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.3s ease-in-out;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    white-space: nowrap;
-    letter-spacing: 0.05em;
-    border: none;
-    cursor: pointer;
-    padding: 8px 12px;
-  }
-  
-  /* Apply NORD font to menu items */
-  .nord-font {
-    font-family: "nord-regular", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    text-transform: uppercase;
-  }
-  
-  /* Radial positions for menu items */
-  .radial-menu-item.expanded {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateX(-50%) translate(var(--x), var(--y)) scale(1);
-  }
-  
-  /* Arc above the button - perfectly centered */
-  .item-1 {
-    --angle: var(--angle-item1);
-    --distance: var(--distance-item1);
-    --x: calc(cos(var(--angle)) * var(--distance));
-    --y: calc(sin(var(--angle)) * var(--distance));
-    transition-delay: var(--delay-item1);
-  }
-  
-  .item-2 {
-    --angle: var(--angle-item2);
-    --distance: var(--distance-item2);
-    --x: calc(cos(var(--angle)) * var(--distance));
-    --y: calc(sin(var(--angle)) * var(--distance));
-    transition-delay: var(--delay-item2);
-  }
-  
-  .item-3 {
-    --angle: var(--angle-item3);
-    --distance: var(--distance-item3);
-    --x: calc(cos(var(--angle)) * var(--distance));
-    --y: calc(sin(var(--angle)) * var(--distance));
-    transition-delay: var(--delay-item3);
-  }
-  
-  .item-4 {
-    --angle: var(--angle-item4);
-    --distance: var(--distance-item4);
-    --x: calc(cos(var(--angle)) * var(--distance));
-    --y: calc(sin(var(--angle)) * var(--distance));
-    transition-delay: var(--delay-item4);
-  }
-  
-  .item-5 {
-    --angle: var(--angle-item5);
-    --distance: var(--distance-item5);
-    --x: calc(cos(var(--angle)) * var(--distance));
-    --y: calc(sin(var(--angle)) * var(--distance));
-    transition-delay: var(--delay-item5);
-  }
-  
-  /* Hover effect - subtle scale for text-only items */
-  .radial-menu-item:hover,
-  .radial-menu-item.item-active {
-    transform: translateX(-50%) translate(var(--x), var(--y)) scale(var(--hover-scale));
-    color: rgba(255, 255, 255, 0.95);
-    transition-delay: 0s !important; /* Remove delay on hover */
-  }
-  
-  /* Remove delay when toggling off the menu */
-  .radial-menu-item:not(.expanded) {
-    transition-delay: 0s !important;
-  }
-</style>

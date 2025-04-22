@@ -1,0 +1,27 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Personal Training | Wellness">
+  <div class="container mx-auto py-12">
+    <h1 class="text-4xl font-bold mb-8">Personal Training 1:1</h1>
+    <p class="mb-6">Customized fitness programs designed specifically for your goals and needs.</p>
+    
+    <div class="prose max-w-none">
+      <p>Our expert personal trainers work with you to create a tailored fitness plan that aligns with your goals, preferences, and lifestyle. Whether you're looking to build strength, improve mobility, or enhance your overall wellbeing, our trainers are here to support and guide you.</p>
+      
+      <h2 class="mt-8">Our Programs</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <a href="/wellness/personal-training/transform" class="card p-6 shadow-md hover:shadow-lg transition">
+          <h3 class="text-xl font-semibold mb-2">Transform</h3>
+          <p>Physical transformation programs focused on fat loss and muscle gain.</p>
+        </a>
+        
+        <a href="/wellness/personal-training/heal" class="card p-6 shadow-md hover:shadow-lg transition">
+          <h3 class="text-xl font-semibold mb-2">Heal (Rehab)</h3>
+          <p>Rehabilitation programs to recover from injury and improve mobility.</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</MainLayout>

@@ -1,0 +1,48 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Meet | HALM Collective">
+  <div class="container mx-auto py-12">
+    <h1 class="text-4xl font-bold mb-8">Meet at HALM</h1>
+    <p class="mb-6">Connect with others in our thoughtfully designed meeting spaces.</p>
+    
+    <div class="prose max-w-none">
+      <p>HALM provides a variety of meeting spaces that foster connection, creativity, and productivity. Whether you're planning a casual meetup, a business meeting, or a community gathering, our spaces provide the perfect backdrop.</p>
+      
+      <h2 class="mt-8">Meeting Spaces</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">The Studio</h3>
+          <p class="mb-2"><span class="font-medium">Capacity:</span> Up to 12 people</p>
+          <p>A bright, airy space perfect for workshops, presentations, or collaborative work sessions.</p>
+        </div>
+        
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">The Lounge</h3>
+          <p class="mb-2"><span class="font-medium">Capacity:</span> Up to 20 people</p>
+          <p>A comfortable, casual setting ideal for networking events and social gatherings.</p>
+        </div>
+        
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Meeting Pods</h3>
+          <p class="mb-2"><span class="font-medium">Capacity:</span> 2-4 people</p>
+          <p>Private, soundproof pods for focused discussions and small meetings.</p>
+        </div>
+        
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Garden Pavilion</h3>
+          <p class="mb-2"><span class="font-medium">Capacity:</span> Up to 30 people</p>
+          <p>An outdoor covered space surrounded by greenery, perfect for events in warmer weather.</p>
+        </div>
+      </div>
+      
+      <h2 class="mt-8">Booking Information</h2>
+      <p>Meeting spaces can be reserved by members or rented by non-members for special events.</p>
+      
+      <div class="mt-4">
+        <a href="/contact" class="bg-primary text-white px-6 py-3 rounded-md hover:bg-primary-dark transition">Book a Space</a>
+      </div>
+    </div>
+  </div>
+</MainLayout>

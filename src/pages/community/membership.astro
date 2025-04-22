@@ -1,0 +1,58 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Membership | HALM Community">
+  <div class="container mx-auto py-12">
+    <h1 class="text-4xl font-bold mb-8">HALM Membership</h1>
+    <p class="mb-6">Become part of our thriving community with membership options designed to fit your lifestyle.</p>
+    
+    <div class="prose max-w-none">
+      <p>HALM membership offers access to our beautiful spaces, exclusive events, and a range of benefits that enhance your wellness journey and community connection.</p>
+      
+      <h2 class="mt-8">Membership Options</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Community Access</h3>
+          <p class="text-lg font-bold mb-4">$99/month</p>
+          <ul class="mt-2">
+            <li>Access to community spaces</li>
+            <li>Invitations to member events</li>
+            <li>Discounts on cafe purchases</li>
+            <li>Use of game library</li>
+          </ul>
+        </div>
+        
+        <div class="card p-6 shadow-md border-2 border-primary">
+          <div class="text-center mb-2">
+            <span class="bg-primary text-white px-3 py-1 text-xs uppercase rounded-full">Most Popular</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Wellness Plus</h3>
+          <p class="text-lg font-bold mb-4">$199/month</p>
+          <ul class="mt-2">
+            <li>All Community Access benefits</li>
+            <li>4 group fitness classes per month</li>
+            <li>Priority booking for events</li>
+            <li>10% off personal training</li>
+          </ul>
+        </div>
+        
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">All-Access</h3>
+          <p class="text-lg font-bold mb-4">$349/month</p>
+          <ul class="mt-2">
+            <li>All Wellness Plus benefits</li>
+            <li>Unlimited group classes</li>
+            <li>Monthly wellness consultation</li>
+            <li>Guest passes for friends</li>
+            <li>20% off all services</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="mt-8">
+        <a href="/contact" class="bg-primary text-white px-6 py-3 rounded-md hover:bg-primary-dark transition">Join the Community</a>
+      </div>
+    </div>
+  </div>
+</MainLayout>

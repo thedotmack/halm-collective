@@ -1,0 +1,27 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Cafe | HALM">
+  <div class="container mx-auto py-12">
+    <h1 class="text-4xl font-bold mb-8">HALM Cafe</h1>
+    <p class="mb-6">Enjoy our artisanal coffee, refreshing beverages, and delicious food in a relaxed atmosphere.</p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+      <a href="/cafe/halm-coffee" class="card p-6 shadow-md hover:shadow-lg transition">
+        <h2 class="text-2xl font-semibold mb-2">HALM Coffee</h2>
+        <p>Discover our signature coffee blends and brewing methods.</p>
+      </a>
+      
+      <a href="/cafe/drinks" class="card p-6 shadow-md hover:shadow-lg transition">
+        <h2 class="text-2xl font-semibold mb-2">Drinks</h2>
+        <p>Explore our selection of specialty beverages.</p>
+      </a>
+      
+      <a href="/cafe/food" class="card p-6 shadow-md hover:shadow-lg transition">
+        <h2 class="text-2xl font-semibold mb-2">Food</h2>
+        <p>Savor our nutritious and delicious menu items.</p>
+      </a>
+    </div>
+  </div>
+</MainLayout>

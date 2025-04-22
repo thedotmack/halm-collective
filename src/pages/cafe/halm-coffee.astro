@@ -1,0 +1,27 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+---
+
+<MainLayout title="HALM Coffee | Cafe">
+  <div class="container mx-auto py-12">
+    <h1 class="text-4xl font-bold mb-8">HALM Coffee</h1>
+    <p class="mb-6">Our signature coffee blends and brewing methods.</p>
+    
+    <div class="prose max-w-none">
+      <p>At HALM, we take coffee seriously. Our beans are ethically sourced from small-batch producers around the world and roasted to perfection in-house to bring out their unique flavor profiles.</p>
+      
+      <h2 class="mt-8">Our Coffee Selection</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">HALM Signature Blend</h3>
+          <p>A balanced medium roast with notes of chocolate, caramel, and a hint of citrus.</p>
+        </div>
+        
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Single Origin Series</h3>
+          <p>Rotating selection of exceptional single-origin coffees from around the world.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>

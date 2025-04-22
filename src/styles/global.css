@@ -34,9 +34,168 @@ html, body {
   display: none;
 }
 
-/* NORD font class */
-.nord-font {
-  font-family: "nord", sans-serif;
+/* NORD font configuration */
+@font-face {
+  font-family: "nord-regular";
+  src: url("/fonts/nord-regular.woff2") format("woff2"),
+       url("/fonts/nord-regular.woff") format("woff"),
+       url("/fonts/nord-regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
+
+.nord-font {
+  font-family: "nord-regular", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-transform: uppercase;
+}
+
+/* RadialMenu Configuration Variables */
+:root {
+  /* Angle positions for each item */
+  --angle-item1: 210deg;
+  --angle-item2: 225deg;
+  --angle-item3: 270deg;
+  --angle-item4: 315deg;
+  --angle-item5: 330deg;
+  
+  /* Distance for each item */
+  --distance-item1: 140px;
+  --distance-item2: 160px;
+  --distance-item3: 150px;
+  --distance-item4: 160px;
+  --distance-item5: 140px;
+  
+  /* Animation timing */
+  --delay-item1: 0s;
+  --delay-item2: 0.05s;
+  --delay-item3: 0.1s;
+  --delay-item4: 0.15s;
+  --delay-item5: 0.2s;
+  
+  /* Hover scale effect */
+  --hover-scale: 1.075;
+  
+  /* Button rotation axis */
+  --button-origin-x: 50%;
+  --button-origin-y: 40%;
+}
+
+/* Radial Menu Styles */
+#radial-menu-toggle.active {
+  @apply bg-transparent z-[1];
+  transition: all 0.3s ease-in-out;
+  transform-origin: var(--button-origin-x) var(--button-origin-y);
+}
+
+#radial-menu-toggle {
+  transform-origin: var(--button-origin-x) var(--button-origin-y);
+}
+
+#default-icon, #pointer-icon {
+  transition: opacity 0.3s ease-in-out;
+  transform-origin: var(--button-origin-x) var(--button-origin-y);
+}
+
+/* Radial menu container */
+.radial-menu {
+  @apply absolute w-full pointer-events-none;
+  height: 200px;
+  bottom: -50px;
+  left: 0;
+  right: 0;
+}
+
+/* Menu items base style */
+.radial-menu-item {
+  @apply absolute bottom-0 left-1/2 flex items-center justify-center text-white font-normal z-40 opacity-0 pointer-events-none whitespace-nowrap border-none cursor-pointer;
+  transform: translateX(-50%) scale(0);
+  background: transparent;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.05em;
+  padding: 8px 12px;
+}
+
+/* Radial positions for menu items */
+.radial-menu-item.expanded {
+  @apply opacity-100 pointer-events-auto;
+  transform: translateX(-50%) translate(var(--x), var(--y)) scale(1);
+}
+
+/* Menu item positions */
+.item-1 {
+  --angle: var(--angle-item1);
+  --distance: var(--distance-item1);
+  --x: calc(cos(var(--angle)) * var(--distance));
+  --y: calc(sin(var(--angle)) * var(--distance));
+  transition-delay: var(--delay-item1);
+}
+
+.item-2 {
+  --angle: var(--angle-item2);
+  --distance: var(--distance-item2);
+  --x: calc(cos(var(--angle)) * var(--distance));
+  --y: calc(sin(var(--angle)) * var(--distance));
+  transition-delay: var(--delay-item2);
+}
+
+.item-3 {
+  --angle: var(--angle-item3);
+  --distance: var(--distance-item3);
+  --x: calc(cos(var(--angle)) * var(--distance));
+  --y: calc(sin(var(--angle)) * var(--distance));
+  transition-delay: var(--delay-item3);
+}
+
+.item-4 {
+  --angle: var(--angle-item4);
+  --distance: var(--distance-item4);
+  --x: calc(cos(var(--angle)) * var(--distance));
+  --y: calc(sin(var(--angle)) * var(--distance));
+  transition-delay: var(--delay-item4);
+}
+
+.item-5 {
+  --angle: var(--angle-item5);
+  --distance: var(--distance-item5);
+  --x: calc(cos(var(--angle)) * var(--distance));
+  --y: calc(sin(var(--angle)) * var(--distance));
+  transition-delay: var(--delay-item5);
+}
+
+/* Hover and active effects */
+.radial-menu-item:hover,
+.radial-menu-item.item-active {
+  transform: translateX(-50%) translate(var(--x), var(--y)) scale(var(--hover-scale));
+  @apply text-white/95;
+  transition-delay: 0s !important;
+}
+
+/* Remove delay when toggling off the menu */
+.radial-menu-item:not(.expanded) {
+  transition-delay: 0s !important;
+}
+
+/* Carousel Menu Styles */
+.menu-section {
+  @apply p-6;
+}
+
+.menu-heading {
+  @apply text-2xl mb-5 text-white text-center;
+  font-family: "nord-regular", sans-serif;
+}
+
+.menu-list {
+  @apply space-y-7 text-center;
+}
+
+.menu-link {
+  @apply text-white block text-3xl tracking-wide;
+  font-family: "nord-light", sans-serif;
+}
+

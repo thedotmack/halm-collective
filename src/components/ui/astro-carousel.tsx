@@ -40,6 +40,38 @@ export function AstroCarousel({ slides, id, className = "" }: AstroCarouselProps
     };
   }, [api]);
 
+  // Track scroll progress for smooth radial menu animation
+  React.useEffect(() => {
+    if (!api) return;
+    
+    const onScroll = () => {
+      // Get the current progress position
+      const progress = api.scrollProgress();
+      const scrollSnaps = api.scrollSnapList();
+      const slidesCount = scrollSnaps.length;
+      
+      // Calculate the sliding position between slides (from 0 to slides.length-1)
+      // This gives us a floating point that represents position between slides
+      const slidePosition = progress * (slidesCount - 1);
+      
+      // Emit custom event with current scroll position
+      window.dispatchEvent(new CustomEvent('carousel-scroll-progress', {
+        detail: { 
+          slidePosition,
+          progress,
+          snapPoints: scrollSnaps 
+        }
+      }));
+    };
+    
+    // Register scroll event
+    api.on("scroll", onScroll);
+    
+    return () => {
+      api.off("scroll", onScroll);
+    };
+  }, [api]);
+
   // Listen for custom events from vanilla JS
   React.useEffect(() => {
     const handleCarouselNavigate = (e: CustomEvent<{ slideIndex: number }>) => {
@@ -70,7 +102,7 @@ export function AstroCarousel({ slides, id, className = "" }: AstroCarouselProps
 
   return (
     <Carousel 
-      className={`w-full h-full ${className}`} 
+      className={`w-full h-[88%] flex items-center ${className}`} 
       id={id}
       setApi={setApi}
     >
@@ -78,9 +110,13 @@ export function AstroCarousel({ slides, id, className = "" }: AstroCarouselProps
         {slides.map((slide, index) => (
           <CarouselItem 
             key={index} 
-            className="bg-white/10 backdrop-blur-md flex items-center justify-center rounded-lg"
+            className="flex items-center justify-center h-full"
           >
-            <div className="text-white text-2xl">{slide.content}</div>
+            {/* Use dangerouslySetInnerHTML to render HTML content */}
+            <div 
+              className="text-white w-full max-w-2xl mx-auto px-4"
+              dangerouslySetInnerHTML={{ __html: slide.content }}
+            />
           </CarouselItem>
         ))}
       </CarouselContent>

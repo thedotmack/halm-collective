@@ -1,0 +1,54 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Drinks | HALM Cafe">
+  <div class="container mx-auto py-12">
+    <h1 class="text-4xl font-bold mb-8">Drinks</h1>
+    <p class="mb-6">Explore our selection of carefully crafted beverages.</p>
+    
+    <div class="prose max-w-none">
+      <p>At HALM Cafe, we take pride in our diverse drink menu that goes beyond exceptional coffee. From freshly squeezed juices to artisanal teas and specialty beverages, there's something to satisfy every palate.</p>
+      
+      <h2 class="mt-8">Drink Categories</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Coffee & Espresso</h3>
+          <ul class="mt-2">
+            <li>Espresso</li>
+            <li>Americano</li>
+            <li>Cappuccino</li>
+            <li>Latte</li>
+            <li>Flat White</li>
+            <li>Cold Brew</li>
+          </ul>
+        </div>
+        
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Teas & Infusions</h3>
+          <ul class="mt-2">
+            <li>Organic Black Tea</li>
+            <li>Green Tea</li>
+            <li>Herbal Infusions</li>
+            <li>Chai Latte</li>
+            <li>Matcha Latte</li>
+            <li>Iced Tea</li>
+          </ul>
+        </div>
+        
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Fresh Juices & Smoothies</h3>
+          <ul class="mt-2">
+            <li>Green Energy Smoothie</li>
+            <li>Berry Blast</li>
+            <li>Tropical Sunrise</li>
+            <li>Freshly Squeezed Orange</li>
+            <li>Detox Green Juice</li>
+          </ul>
+        </div>
+      </div>
+      
+      <p class="mt-8">All drinks can be customized to accommodate dietary preferences and restrictions.</p>
+    </div>
+  </div>
+</MainLayout>

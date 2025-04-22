@@ -1,0 +1,41 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Nutrition | HALM Wellness">
+  <div class="container mx-auto py-12">
+    <h1 class="text-4xl font-bold mb-8">Nutrition</h1>
+    <p class="mb-6">Fuel your body with expert nutrition guidance and personalized meal planning.</p>
+    
+    <div class="prose max-w-none">
+      <p>Our nutrition services help you establish a sustainable, balanced approach to eating that complements your fitness goals and lifestyle. We focus on education, practical strategies, and creating nutritional habits that last a lifetime.</p>
+      
+      <h2 class="mt-8">Our Services</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Nutrition Consultation</h3>
+          <p>A comprehensive assessment of your current eating habits, goals, and nutritional needs.</p>
+        </div>
+        
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Personalized Meal Planning</h3>
+          <p>Custom meal plans designed around your preferences, lifestyle, and nutritional requirements.</p>
+        </div>
+        
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Nutrition Coaching</h3>
+          <p>Ongoing support to help you implement sustainable eating habits and navigate challenges.</p>
+        </div>
+        
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Cooking Workshops</h3>
+          <p>Learn how to prepare delicious, nutritious meals that support your wellness goals.</p>
+        </div>
+      </div>
+      
+      <div class="mt-8">
+        <a href="/contact" class="bg-primary text-white px-6 py-3 rounded-md hover:bg-primary-dark transition">Schedule a Consultation</a>
+      </div>
+    </div>
+  </div>
+</MainLayout>

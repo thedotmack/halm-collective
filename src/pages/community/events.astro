@@ -1,0 +1,46 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Events | HALM Community">
+  <div class="container mx-auto py-12">
+    <h1 class="text-4xl font-bold mb-8">Community Events</h1>
+    <p class="mb-6">Join us for a variety of gatherings, workshops, and special events that bring our community together.</p>
+    
+    <div class="prose max-w-none">
+      <p>Our community events are designed to foster connection, inspire creativity, and promote wellbeing. From casual meetups to structured workshops, there's something for everyone at HALM.</p>
+      
+      <h2 class="mt-8">Upcoming Events</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Community Breakfast</h3>
+          <p class="text-sm text-gray-500 mb-2">Saturday, June 15 | 9:00 AM - 11:00 AM</p>
+          <p>Join us for a nutritious community breakfast and connect with fellow HALM members.</p>
+        </div>
+        
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Wellness Workshop</h3>
+          <p class="text-sm text-gray-500 mb-2">Wednesday, June 19 | 6:30 PM - 8:00 PM</p>
+          <p>Learn practical strategies for incorporating wellness practices into your daily routine.</p>
+        </div>
+        
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Networking Mixer</h3>
+          <p class="text-sm text-gray-500 mb-2">Friday, June 28 | 6:00 PM - 9:00 PM</p>
+          <p>Connect with professionals and entrepreneurs in our vibrant community.</p>
+        </div>
+      </div>
+      
+      <h2 class="mt-8">Past Events</h2>
+      <p>Browse our gallery of past community events and activities.</p>
+      
+      <div class="mt-4">
+        <a href="/gallery" class="text-primary hover:underline">View Event Gallery</a>
+      </div>
+      
+      <div class="mt-8">
+        <a href="/contact" class="bg-primary text-white px-6 py-3 rounded-md hover:bg-primary-dark transition">Register for an Event</a>
+      </div>
+    </div>
+  </div>
+</MainLayout>

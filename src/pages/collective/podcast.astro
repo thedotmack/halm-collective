@@ -1,0 +1,39 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Podcast | HALM Collective">
+  <div class="container mx-auto py-12">
+    <h1 class="text-4xl font-bold mb-8">HALM Podcast</h1>
+    <p class="mb-6">Thought-provoking conversations on wellness, creativity, community, and more.</p>
+    
+    <div class="prose max-w-none">
+      <p>The HALM Podcast brings together diverse voices from our community and beyond to discuss topics that matter. From wellness experts to creative thinkers, our guests share insights that inspire, educate, and connect.</p>
+      
+      <h2 class="mt-8">Latest Episodes</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Episode 12: Mindful Movement</h3>
+          <p class="text-sm text-gray-500 mb-2">Released: May 15, 2023</p>
+          <p>Our fitness director discusses how mindful movement practices can transform your relationship with exercise.</p>
+          <a href="#" class="mt-4 inline-block text-primary hover:underline">Listen Now</a>
+        </div>
+        
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Episode 11: Building Community</h3>
+          <p class="text-sm text-gray-500 mb-2">Released: May 1, 2023</p>
+          <p>A conversation about the importance of community spaces in urban environments.</p>
+          <a href="#" class="mt-4 inline-block text-primary hover:underline">Listen Now</a>
+        </div>
+      </div>
+      
+      <h2 class="mt-8">Where to Listen</h2>
+      <div class="flex flex-wrap gap-4 mt-4">
+        <a href="#" class="px-4 py-2 border rounded-md hover:bg-gray-100 transition">Spotify</a>
+        <a href="#" class="px-4 py-2 border rounded-md hover:bg-gray-100 transition">Apple Podcasts</a>
+        <a href="#" class="px-4 py-2 border rounded-md hover:bg-gray-100 transition">Google Podcasts</a>
+        <a href="#" class="px-4 py-2 border rounded-md hover:bg-gray-100 transition">YouTube</a>
+      </div>
+    </div>
+  </div>
+</MainLayout>

@@ -1,0 +1,63 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Food | HALM Cafe">
+  <div class="container mx-auto py-12">
+    <h1 class="text-4xl font-bold mb-8">Food Menu</h1>
+    <p class="mb-6">Nourishing, delicious options made with fresh, high-quality ingredients.</p>
+    
+    <div class="prose max-w-none">
+      <p>Our food menu is thoughtfully designed to provide balanced, nutritious options that taste amazing. We source locally whenever possible and prioritize whole, minimally processed ingredients to fuel your body and mind.</p>
+      
+      <h2 class="mt-8">Menu Categories</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Breakfast</h3>
+          <ul class="mt-2">
+            <li>Avocado Toast with Poached Eggs</li>
+            <li>Overnight Oats with Seasonal Fruit</li>
+            <li>Greek Yogurt Parfait</li>
+            <li>Spinach & Feta Frittata</li>
+            <li>Protein Pancakes</li>
+          </ul>
+        </div>
+        
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Lunch</h3>
+          <ul class="mt-2">
+            <li>Mediterranean Quinoa Bowl</li>
+            <li>Grilled Chicken Salad</li>
+            <li>Roasted Vegetable Wrap</li>
+            <li>Protein Power Bowl</li>
+            <li>Seasonal Soup & Sourdough</li>
+          </ul>
+        </div>
+        
+        <div class="card p-6 shadow-md">
+          <h3 class="text-xl font-semibold mb-2">Light Bites</h3>
+          <ul class="mt-2">
+            <li>Hummus & Crudités</li>
+            <li>Nuts & Seed Mix</li>
+            <li>Energy Balls</li>
+            <li>Fresh Fruit Plate</li>
+            <li>Artisanal Cheese Board</li>
+          </ul>
+        </div>
+      </div>
+      
+      <h2 class="mt-8">Dietary Options</h2>
+      <p>We cater to various dietary preferences and restrictions. Look for these symbols on our menu:</p>
+      
+      <div class="flex flex-wrap gap-4 mt-4">
+        <span class="px-2 py-1 bg-gray-100 rounded-md text-sm">V - Vegetarian</span>
+        <span class="px-2 py-1 bg-gray-100 rounded-md text-sm">VG - Vegan</span>
+        <span class="px-2 py-1 bg-gray-100 rounded-md text-sm">GF - Gluten-Free</span>
+        <span class="px-2 py-1 bg-gray-100 rounded-md text-sm">DF - Dairy-Free</span>
+        <span class="px-2 py-1 bg-gray-100 rounded-md text-sm">N - Contains Nuts</span>
+      </div>
+      
+      <p class="mt-6">Our menu changes seasonally to incorporate the freshest ingredients. Please ask our staff about today's specials!</p>
+    </div>
+  </div>
+</MainLayout>
